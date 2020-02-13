@@ -9,9 +9,9 @@
             {{ log(value.types)}}
             <template v-if="!Array.isArray(value)">
                 <div>{{value.name}} </div>
-                <div v-for="(type, i) in value.types" :key="i" v-show="isToggled" :class="{selected : i == isSelected}"
-             @click="selectItem(i)">{{ type }}</div>
-                <button @click="isToggled = !isToggled">Click</button>
+                <div v-for="(type, i) in value.types" :key="i" :class="{selected : i == isSelected  }"
+             @click="selectItem(i), toggleParameter(index)" class="parameter-button">{{ type }}</div>
+                <button @click="toggleParameter(index)">Click</button>
             </template>
 
        </li>
@@ -35,9 +35,10 @@ export default {
   data: function(){
     return {
       title: 'dol-sensors',
-      parameters: [{name: 'Sensor Type', types: ['SCR', 'NPN', 'PNP']}, {name: 'Diameter', types: ['18mm', '200mm']}],
+      parameters: [{name: 'Sensor Type', types: ['SCR', 'NPN', 'PNP']}, {name: 'Diameter', types: ['18mm', '200mm']}, {name: 'Delay', types: ['OFF', 'ON']}],
       isToggled: null,
-        isSelected: null
+        isSelected: null,
+        visible: false
     }
   },
   methods: {
@@ -46,6 +47,9 @@ export default {
     },
       selectItem: function(i){
         this.isSelected = i;
+      },
+      toggleParameter: function (index) {
+            this.isToggled = index;
       }
   }
 }
@@ -65,9 +69,21 @@ export default {
     padding: 0;
   }
   .toggled{
-      padding-bottom: 20%;
+      display: none;
+  }
+  .none {
+      display: none;
   }
   .selected {
       background-color: #004077;
+      color: white;
   }
+    .parameter-button {
+        border: 1.5px solid #004077;
+        margin-right: 4%;
+        border-radius: 20px;
+        padding: 0 2% 0;
+        display: inline-block;
+
+    }
 </style>
