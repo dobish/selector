@@ -1,24 +1,26 @@
 <template>
   <div id="app">
     <NavHeader></NavHeader>
-    <div class="sensor-image">
-      <img alt="Vue logo" src="./assets/DOL26.png">
-    </div>
-      <Parameters></Parameters>
+      <router-view></router-view>
   </div>
 </template>
 
 <script>
 import NavHeader from "./components/NavHeader.vue";
-import Parameters from "@/components/Parameters";
+
+
+
+
 
 export default {
   name: 'App',
   components: {
-    Parameters,
     NavHeader
+
   }
 }
+
+
 </script>
 
 <style>
@@ -44,9 +46,7 @@ body {
   margin: 0;
 }
 
-.sensor-image {
-  width: 100%;
-}
+
 
 img {
  width: 100%;

@@ -1,16 +1,28 @@
 <template>
-  <div class="hello">{{ hello }}</div>
+  <div class="hello">
+    <p>{{ hello }}</p>
+    <input type="text" :value="msg" @input="changeMessage">
+    <br>
+    <p>{{ messageHello }}</p>
+    <router-link to="/">aaaaaa</router-link>
+  </div>
+
 </template>
 
 <script>
 export default {
   name: 'HelloWorld',
-  props: {
-    msg: String
-  },
+  props: ['msg'],
   data: function(){
     return {
-      hello: 'hello'
+      hello: 'Hello World',
+      messageHello: 'MESSAGE'
+    }
+  },
+  methods: {
+    changeMessage(event) {
+      this.messageHello = event.target.value;
+      this.$emit('messageChanged', this.messageHello);
     }
   }
 }

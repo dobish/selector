@@ -1,9 +1,13 @@
 <template>
+
     <div>
+        <div class="sensor-image">
+            <img alt="Vue logo" src="@/assets/DOL26.png">
+        </div>
 <ul>
 <!--  <li v-for="parameter in parameters" v-bind:key="parameter.name" v-bind:class="{toggled: isToggled}">{{ parameter.name }}<button @click="isToggled = !isToggled">Click</button></li>-->
 <Parameter></Parameter>
-
+<p @messageChanged="messageHello = $event">{{ msg }}</p>
    <ul >
         <li v-for="(value, index) in parameters" v-bind:key="index">
             {{ log(value.types)}}
@@ -19,6 +23,7 @@
 </ul>
 
     </div>
+
 </template>
 
 <script>
@@ -28,10 +33,7 @@ export default {
   components: {
     Parameter
   },
-  props: {
-    msg: String,
-
-  },
+  props: ['msg'],
   data: function(){
     return {
       title: 'dol-sensors',
@@ -86,4 +88,9 @@ export default {
         display: inline-block;
 
     }
+  .sensor-image {
+      width: 100%;
+  }
+
+
 </style>
