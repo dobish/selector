@@ -4,34 +4,30 @@
         <div class="sensor-image">
             <img alt="Vue logo" src="@/assets/DOL26.png">
         </div>
-<ul>
+
 <!--  <li v-for="parameter in parameters" v-bind:key="parameter.name" v-bind:class="{toggled: isToggled}">{{ parameter.name }}<button @click="isToggled = !isToggled">Click</button></li>-->
-<Parameter></Parameter>
-<p @messageChanged="messageHello = $event">{{ msg }}</p>
-   <ul >
-        <li v-for="(value, index) in parameters" v-bind:key="index">
-            {{ log(value.types)}}
-            <template v-if="!Array.isArray(value)">
-                <div>{{value.name}} </div>
-                <div v-for="(type, i) in value.types" :key="i" :class="{selected : i == isSelected  }"
-             @click="selectItem(i), toggleParameter(index)" class="parameter-button">{{ type }}</div>
-                <button @click="toggleParameter(index)">Click</button>
-            </template>
 
-       </li>
-    </ul>
-</ul>
 
+        <ul v-for="(sensor, index) in sensors" v-bind:key="index">
+            <li>{{sensor.name}}</li>
+            <div v-for="(type, index) in sensor.types" :key="index" class="parameter-button" :class="{highlight:selected.includes(type)}"
+                 @click="selected.includes(type) ? selected.splice(selected.indexOf(type), 1) : selected.push(type)"
+            >{{ type }}</div>
+        </ul>
+<ContactForm></ContactForm>
+        <button type="submit">Show sensors</button>
     </div>
 
 </template>
 
 <script>
-  import Parameter from "@/components/Parameter";
+    const API_URL = "http://localhost:4000/sensors";
+
+    import ContactForm from "@/components/ContactForm";
 export default {
   name: 'Parameters',
   components: {
-    Parameter
+      ContactForm
   },
   props: ['msg'],
   data: function(){
@@ -40,9 +36,18 @@ export default {
       parameters: [{name: 'Sensor Type', types: ['SCR', 'NPN', 'PNP']}, {name: 'Diameter', types: ['18mm', '200mm']}, {name: 'Delay', types: ['OFF', 'ON']}],
       isToggled: null,
         isSelected: null,
-        visible: false
+        visible: false,
+        sensors: [],
+        selected: []
     }
   },
+    mounted() {
+        fetch(API_URL)
+            .then(response => response.json())
+            .then(result => {
+                this.sensors = result;
+            });
+    },
   methods: {
     log(message){
         console.log(message);
@@ -63,12 +68,15 @@ export default {
   li{
     list-style: none;
     font-family:"Work Sans";
-    padding-bottom: 8%;
+    padding-bottom: 2%;
     color: #2f2f2f;
   }
   ul {
     margin: 0;
+      margin-bottom: 5%;
+      margin-left: 25%;
     padding: 0;
+      width: 50%;
   }
   .toggled{
       display: none;
@@ -76,17 +84,19 @@ export default {
   .none {
       display: none;
   }
-  .selected {
+  .highlight {
       background-color: #004077;
-      color: white;
+      color: white !important;
   }
     .parameter-button {
-        border: 1.5px solid #004077;
+        border: 1px solid #004077;
         margin-right: 4%;
         border-radius: 20px;
-        padding: 0 2% 0;
+        padding: 0 15px 0;
         display: inline-block;
-
+        color: #004077;
+        padding-top: 0.5%;
+        margin-bottom: 10%;
     }
   .sensor-image {
       width: 100%;
