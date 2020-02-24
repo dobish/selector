@@ -7,6 +7,7 @@ import apiTest from "@/components/apiTest";
 import ChosenSensor from "@/components/ChosenSensor";
 import FinalScreen from "@/components/FinalScreen";
 import testFilter from "@/components/testFilter";
+import Dealer from "@/components/Dealer";
 
 
 export default [
@@ -18,6 +19,7 @@ export default [
     { path: '/test', component: apiTest},
     { path: '/chosen', component: ChosenSensor},
     { path: '/final', component: FinalScreen},
-    { path: '/filter', component: testFilter}
+    { path: '/filter', component: testFilter},
+    { path: '/dealer', component: Dealer}
 
 ]

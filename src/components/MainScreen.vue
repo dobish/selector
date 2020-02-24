@@ -10,6 +10,7 @@
             <p class="">If you need guidance <button>Contact Us</button></p>
         </div>
         <hr>
+        <Dealer></Dealer>
         <div class="dealer">
             <p class="title">Your closest dealer</p>
                 <div class="details">
@@ -24,8 +25,12 @@
 </template>
 
 <script>
+    import Dealer from "@/components/Dealer";
     export default {
-        name: "MainScreen"
+        name: "MainScreen",
+        components: {
+            Dealer
+        }
     }
 </script>
 
