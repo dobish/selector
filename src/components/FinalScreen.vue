@@ -4,7 +4,7 @@
         <p v-for="(variant, index) in variants" v-bind:key="index"> {{ variant }}</p>
         <hr>
         <div  v-for="sensor in filteredParameters" v-bind:key="sensor.name">
-            <p v-for="(value, name, index) in sensor" v-bind:key="value.objectID" @click="aaa">{{ index }}, {{ name }}: {{ value }}, {{value.objectID }}</p>
+            <p v-for="(value, name, index) in sensor" v-bind:key="value.objectID" @click="marek">{{ index }}, {{ name }}: {{ value }}, {{value.objectID }}</p>
             <hr>
         </div>
     </div>
@@ -17,12 +17,13 @@
         name: "FinalScreen",
         data: function(){
             return {
-                variants: [],
+                variants: "",
+                filteredVariants: "",
                 sensors: [
-                    {"name": "DOL 26 with SCR 16", "type": "SCR", "diameter":"16mm" },
-                    {"name": "DOL 26 with NPN 16", "type": "NPN", "diameter":"16mm" },
-                    {"name": "DOL 26 with PNP 23", "type": "PNP", "diameter":"23mm" },
-                    {"name": "DOL 27 with PNP 23", "type": "PNP", "diameter":"18mm" }
+                    {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm" },
+                    {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm" },
+                    {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm" },
+                    {name: "DOL 27 with PNP 23", type: "PNP", diameter:"18mm" }
                     ]
             }
 
@@ -32,9 +33,12 @@
                 var vm = this;
                     let lclstrg = JSON.parse(localStorage.getItem("Parameters"))//Get parameters from local storage and turn it into Array
                     vm.variants = lclstrg // assign values from local storage to data()
+                    let lclString = lclstrg.toString().toLowerCase()
+                    vm.filteredVariants = lclString
+
             },
-            aaa: function () {
-                console.log("aaaa")
+            marek: function () {
+                console.log("Marek")
                 var vm = this;
                 console.log(vm.sensors)
                 let loc = JSON.parse(localStorage.getItem("Parameters"))
@@ -49,26 +53,18 @@
         },
         computed: {
             filteredParameters: function () {
-                /*return this.sensors.filter((sensor) => {
-                    return sensor.type.includes(this.variants) || sensor.diameter.includes(this.variants);
-                })*/
-               /* let filtered = this.sensors;
-                if (this.variants){
+                   return this.sensors.filter((sensor) => {
+                        return sensor.type.toLowerCase().includes(this.filteredVariants) || sensor.diameter.includes(this.variants);
+
+                    })
+
+         /*     let filtered = this.sensors;
+                if (this.filteredVariants){
                     filtered = this.sensors.filter(
-                        m => m.type.toLowerCase().indexOf(this.variants) > -1
+                        m => m.type.toLowerCase().indexOf(this.filteredVariants) > -1
                     );
-                    console.log(filtered)
                 }
                 return filtered;*/
-                var textSearch = this.textSearch;
-                var filteredTags = {};
-                var tags = this.variants;
-                Object.keys(this.variants).forEach(function(key) {
-                    filteredTags[key] = tags[key].filter(function(el) {
-                        return el.type.toLowerCase().indexOf(textSearch.toLowerCase()) !== -1;
-                    });
-                });
-                return filteredTags;
             }
         },
         beforeMount(){
