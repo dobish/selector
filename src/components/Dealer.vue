@@ -2,28 +2,19 @@
     <div>
 
         <div>
-            <h2 @click="getLocation">Your location</h2>
-            <div class="map">
-                {{ latitude }}
-                {{ longitude }}
-            </div>
+            <h2>Locate a dealer</h2>
             <div id="map"></div>
         </div>
         <l-map ref="myMap"></l-map>
 
-        <div style="height: 500px; width: 100%">
-            <div style="height: 200px; overflow: auto;">
-                <p>First marker is placed at {{ withPopup.lat }}, {{ withPopup.lng }}</p>
-                <p>Center is at {{ currentCenter }} and the zoom is: {{ currentZoom }}</p>
-                <button @click="showLongText">
-                    Toggle long popup
-                </button>
+        <div style="height: 70vh; width: 100%">
+            <div style="margin-bottom: 5%">
                 <button @click="toggleMap()">
                     Toggle map
                 </button>
             </div>
             <l-map
-                    v-if="showMap"
+                    v-if="location"
                     :zoom="zoom"
                     :center="center"
                     :options="mapOptions"
@@ -35,31 +26,32 @@
                         :url="url"
                         :attribution="attribution"
                 />
-                <l-marker :lat-lng="withPopup">
-                    <l-popup>
-                        <div @click="innerClick">
-                            I am a popup
-                            <p v-show="showParagraph">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                                sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-                                Donec finibus semper metus id malesuada.
-                            </p>
-                        </div>
+                <l-marker
+                        v-for="dealer in dealers"
+                        :key="dealer.id"
+                        :visible="dealer.visible"
+                        :draggable="dealer.draggable"
+                        :lat-lng.sync="dealer.position"
+                        :icon="dealer.icon"
+                >
+                    <l-popup class="popup">
+                        <p class="company">{{ dealer.company }}</p>
+                        <p>{{ dealer.addressLine_1 }}</p>
+                        <p>{{ dealer.addressLine_2 }}</p>
+                        <p>{{ dealer.phone_1 }}</p>
+                        <p>{{ dealer.email }}</p>
                     </l-popup>
+
                 </l-marker>
-                <l-marker :lat-lng="markerPos" @click="toggleTip = !toggleTip">
+
+<!--                <l-marker :lat-lng="markerPos" @click="toggleTip = !toggleTip">
                     <l-popup :options="{ permanent: true, interactive: false }">
                             <p class="company">dol-sensors A/S</p>
                             <p>Agro Food Park 15</p>
                             <p>8200 Aarhus N</p>
                     </l-popup>
-                </l-marker>
+                </l-marker>-->
 
-                <l-marker :lat-lng="withTooltip">
-                    <l-tooltip :options="{ permanent: false, interactive: true }">
-
-                    </l-tooltip>
-                </l-marker>
             </l-map>
         </div>
     </div>
@@ -67,7 +59,8 @@
 
 <script>
     import { latLng } from "leaflet";
-    import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
+    import { LMap, LTileLayer, LMarker, LPopup } from "vue2-leaflet";
+    import dealers from '../data/dealers.json'
 
     export default {
         name: "Dealer",
@@ -76,29 +69,16 @@
             LTileLayer,
             LMarker,
             LPopup,
-            LTooltip
+
         },
+        props: ["Something"],
         data: () => ({
             myLocation: null,
             longitude: null,
             latitude: null,
-            zoom: 13,
+            zoom: 7,
             center: null,
-            markers: [
-                {
-                    id: 'm1',
-                    position: { lat: 56.739471, lng: 8.871149 },
-                    popup: 'tooltip for marker1',
-                    draggable: false,
-                    visible: true,
-                },
-                {
-                    id: 'm2',
-                    position: { lat: 56.200106, lng: 10.159627 },
-                    popup: 'tooltip for marker2',
-                    draggable: false,
-                    visible: true,
-                }],
+            dealers: dealers,
             url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             attribution:
                 '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -112,20 +92,24 @@
             },
             markerPos: latLng(56.199987, 10.159438),
             showMap: false,
-            toggleTip: false
+            toggleTip: false,
+            pending: true,
+            error: false,
+            location:null,
+            gettingLocation: false,
+            errorStr:null
         }),
         methods: {
             getLocation: function () {
-                if (navigator.geolocation){
+/*                if (navigator.geolocation){
                     navigator.geolocation.getCurrentPosition(position => {
                         this.longitude = position.coords.longitude;
                         this.latitude = position.coords.latitude;
-
                     })
                 }
                 else {
                     this.myLocation = 'Location not available'
-                }
+                }*/
             },
             zoomUpdate(zoom) {
                 this.currentZoom = zoom;
@@ -133,40 +117,88 @@
             centerUpdate(center) {
                 this.currentCenter = center;
             },
-            showLongText() {
-                this.showParagraph = !this.showParagraph;
-            },
-            innerClick() {
-                alert("Click!");
-
-            },
             toggleMap: function () {
                 this.showMap = !this.showMap;
-                this.center = latLng(this.latitude, this.longitude)
-
-
+                this.center = latLng(this.latitude, this.longitude);
             }
         },
-        mounted() {
-            navigator.geolocation.getCurrentPosition(position => {
-                this.longitude = position.coords.longitude;
-                this.latitude = position.coords.latitude;
+       /* beforeMount() {
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(position => {
 
-                //this.zoom = 13;
-                //this.center = latLng(position.coords.latitude, position.coords.longitude)
-            })
-
+                    this.longitude = position.coords.longitude;
+                    this.latitude = position.coords.latitude;
+                    console.log("Map should be already available " + this.longitude);
+                    localStorage.setItem("longitude", this.longitude);
+                    localStorage.setItem("latitude", this.latitude)
+                })
+            }
+            else {
+                this.myLocation = 'Location not available'
+            }
         },
+        mounted(){
+          let lat = localStorage.getItem('latitude');
+          let long = localStorage.getItem('longitude')
+          console.log(lat);
+          this.longitude = long
+            console.log(this.longitude)
+            this.center = latLng(lat, long);
+          if (!('geolocation' in navigator)){
+              console.log('error')
+          }
+          else {
 
+              this.showMap = !this.showMap;
+              console.log("inside else")
+          }
+        },*/
+        created() {
+            //do we support geolocation
+            if(!("geolocation" in navigator)) {
+                this.errorStr = 'Geolocation is not available.';
+                return;
+            }
 
-    }
+            this.gettingLocation = true;
+            // get position
+            navigator.geolocation.getCurrentPosition(pos => {
+                this.gettingLocation = false;
+                this.location = pos;
+                console.log(pos.coords)
+                this.center = latLng(pos.coords.latitude, pos.coords.longitude)
+            }, err => {
+                this.gettingLocation = false;
+                this.errorStr = err.message;
+            })
+        }}
 
 </script>
 
 <style scoped>
     @import "~leaflet/dist/leaflet.css";
+    html {
+        color: #292f33;
+    }
     .company {
         color: #004077;
         font-weight: bold;
+        margin-bottom: 5% !important;
     }
+     .popup p{
+        margin: 0;
+    }
+    button {
+        border: 1.5px solid #004077;
+        margin-right: 4%;
+        border-radius: 20px;
+        padding: 1% 3% 0;
+        display: inline-block;
+        background-color: white;
+        color: #004077;
+        font-size: medium;
+        margin-top: 6%;
+        text-transform: uppercase;
+    }
+
 </style>

@@ -11,16 +11,6 @@
         </div>
         <hr>
         <Dealer></Dealer>
-        <div class="dealer">
-            <p class="title">Your closest dealer</p>
-                <div class="details">
-                    <p class="country">Denmark</p>
-                    <p class="">dol-sensors A/S</p>
-                    <p class="">Agro Food Park 15</p>
-                    <p class="">8200 Aarhus N</p>
-                </div>
-        </div>
-        <hr>
     </div>
 </template>
 
