@@ -7,18 +7,13 @@
         </div>
         <l-map ref="myMap"></l-map>
 
-        <div style="height: 70vh; width: 100%">
-            <div style="margin-bottom: 5%">
-                <button @click="toggleMap()">
-                    Toggle map
-                </button>
-            </div>
+        <div style="height: 50vh; width: 100%">
             <l-map
                     v-if="location"
                     :zoom="zoom"
                     :center="center"
                     :options="mapOptions"
-                    style="height: 80%"
+                    style="height: 100%"
                     @update:center="centerUpdate"
                     @update:zoom="zoomUpdate"
             >
@@ -38,20 +33,12 @@
                         <p class="company">{{ dealer.company }}</p>
                         <p>{{ dealer.addressLine_1 }}</p>
                         <p>{{ dealer.addressLine_2 }}</p>
+                        <p>{{ dealer.addressLine_3 }}</p>
                         <p>{{ dealer.phone_1 }}</p>
                         <p>{{ dealer.email }}</p>
                     </l-popup>
 
                 </l-marker>
-
-<!--                <l-marker :lat-lng="markerPos" @click="toggleTip = !toggleTip">
-                    <l-popup :options="{ permanent: true, interactive: false }">
-                            <p class="company">dol-sensors A/S</p>
-                            <p>Agro Food Park 15</p>
-                            <p>8200 Aarhus N</p>
-                    </l-popup>
-                </l-marker>-->
-
             </l-map>
         </div>
     </div>
@@ -100,77 +87,39 @@
             errorStr:null
         }),
         methods: {
-            getLocation: function () {
-/*                if (navigator.geolocation){
-                    navigator.geolocation.getCurrentPosition(position => {
-                        this.longitude = position.coords.longitude;
-                        this.latitude = position.coords.latitude;
-                    })
-                }
-                else {
-                    this.myLocation = 'Location not available'
-                }*/
-            },
+
             zoomUpdate(zoom) {
                 this.currentZoom = zoom;
             },
             centerUpdate(center) {
                 this.currentCenter = center;
-            },
-            toggleMap: function () {
-                this.showMap = !this.showMap;
-                this.center = latLng(this.latitude, this.longitude);
             }
         },
-       /* beforeMount() {
-            if (navigator.geolocation){
-                navigator.geolocation.getCurrentPosition(position => {
-
-                    this.longitude = position.coords.longitude;
-                    this.latitude = position.coords.latitude;
-                    console.log("Map should be already available " + this.longitude);
-                    localStorage.setItem("longitude", this.longitude);
-                    localStorage.setItem("latitude", this.latitude)
-                })
-            }
-            else {
-                this.myLocation = 'Location not available'
-            }
-        },
-        mounted(){
-          let lat = localStorage.getItem('latitude');
-          let long = localStorage.getItem('longitude')
-          console.log(lat);
-          this.longitude = long
-            console.log(this.longitude)
-            this.center = latLng(lat, long);
-          if (!('geolocation' in navigator)){
-              console.log('error')
-          }
-          else {
-
-              this.showMap = !this.showMap;
-              console.log("inside else")
-          }
-        },*/
         created() {
-            //do we support geolocation
+            //Checks if geolocation is supported by browser (Can be unavailable because of lack of HTTPS)
             if(!("geolocation" in navigator)) {
-                this.errorStr = 'Geolocation is not available.';
-                return;
-            }
+                this.errorStr = 'Geolocation is not available.'; //Sets error string
+ }
+             this.gettingLocation = true; //When user didn't click 'allow' nor 'block'
+            {
 
-            this.gettingLocation = true;
-            // get position
-            navigator.geolocation.getCurrentPosition(pos => {
-                this.gettingLocation = false;
-                this.location = pos;
-                console.log(pos.coords)
-                this.center = latLng(pos.coords.latitude, pos.coords.longitude)
-            }, err => {
-                this.gettingLocation = false;
-                this.errorStr = err.message;
-            })
+                // get position if geolocation is available
+                navigator.geolocation.getCurrentPosition(pos => {
+                    this.gettingLocation = false;
+                    this.location = pos;
+                    this.center = latLng(pos.coords.latitude, pos.coords.longitude); //Sets center to received coordinates
+                    this.zoom = 7;
+                }, err => {
+                    //Sets maps center if geolocation was denied
+                    this.gettingLocation = false;
+                    this.center = latLng(42.684184, 20.223107);
+                    this.zoom = 1.5;
+                    this.location = true;
+                    this.locationRejected = true;
+                    this.errorStr = err.message;
+                })}
+
+
         }}
 
 </script>
