@@ -17,12 +17,8 @@
             <input type="button" v-for="(type, index) in sensor.types" :key="index" class="parameter-button" :value="type" :class="{highlight:selected.includes(type)}"
                    @click="selected.includes(type) ? selected.splice(selected.indexOf(type), 1) : selected.push(type)">
             </div>
-
-
             <button type="submit">Show Sensors</button>
         </form>
-
-
         <p>{{$data.selected }}</p>
         <ChosenSensor @params-submitted="displayParams"></ChosenSensor>
         <ul>
