@@ -5,6 +5,8 @@ import Routes from "./routes";
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import axios from 'axios';
+import VueAxios from "vue-axios";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -13,7 +15,7 @@ L.Icon.Default.mergeOptions({
   iconUrl: require('../src/assets/pin_icon.png'),
   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
-Vue.use(VueRouter);
+Vue.use(VueRouter, VueAxios, axios);
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);

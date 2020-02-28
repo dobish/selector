@@ -8,6 +8,7 @@ import ChosenSensor from "@/components/ChosenSensor";
 import FinalScreen from "@/components/FinalScreen";
 import testFilter from "@/components/testFilter";
 import Dealer from "@/components/Dealer";
+import testAxio from "@/components/testAxio";
 
 
 export default [
@@ -20,6 +21,7 @@ export default [
     { path: '/chosen', component: ChosenSensor},
     { path: '/final', component: FinalScreen},
     { path: '/filter', component: testFilter},
-    { path: '/dealer', component: Dealer}
+    { path: '/dealer', component: Dealer},
+    { path: '/axio', component: testAxio}
 
 ]

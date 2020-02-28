@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const nodemailer = require('nodemailer')
 
 const sensors = require('./db/sensors');
 
@@ -37,3 +38,39 @@ const port = process.env.PORT || 4000;
 app.listen(port, () => {
     console.log(`listening on ${port}`);
 });
+
+
+//Email sending with nodemailer
+/*let transport = nodemailer.createTransport({
+    host: 'smtp.mailtrap.io',
+    port: 2525,
+    auth: {
+        user: 'deef4c8100a0e7',
+        pass: 'a5333715677dc0'
+    }
+});
+
+//Message content
+const message = {
+    from: 'test@test.com',
+    to: 'to@email.com',
+    subject: 'Subject field',
+    text: 'Email text'
+};
+
+transport.sendMail(message, function (err, info) {
+    if(err) {
+        console.log(err)
+    } else {
+        console.log(info)
+    }
+})*/
+
+app.post('/sendmail', function (req, res) {
+    let data = {
+        'from': req.body.email,
+    }
+    console.log(data)
+    res.send(data)
+
+})

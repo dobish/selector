@@ -15,7 +15,7 @@
             <hr>
         </div>
         <h2>Loop 3</h2>
-        <div v-for="(item, index) in filterThisShit" :key="index+62">
+        <div v-for="(item, index) in filteringTry" :key="index+62">
             <p>{{ item.name }}</p>
         </div>
     </div>
@@ -92,7 +92,7 @@
             return getByDiameter(getByType(this.sensors, this.type), this.diameter)
             },
 
-            filterThisShit: function () {
+            FilteringTry: function () {
                return Array.prototype.forEach.call(this.variants, variants => {
                     return filterSensors(this.sensors, variants)
                 })
@@ -106,11 +106,10 @@
             var vm = this;
             console.log(vm.sensors)
             let loc = JSON.parse(localStorage.getItem("Parameters"))
-            let filter = vm.sensors.includes("SCR")
+            //let filter = vm.sensors.includes("SCR")
             console.log(loc)
             //const arr = vm.sensors.filter(d => d.type === 'SCR')
             //console.log(arr)
-            console.log(filter)
             console.log(vm.variants)
             //Loops through observer objects and tries to match them with filtered computed (Chosen filters)
 
@@ -150,7 +149,7 @@
     function filterSensors(list, filters) {
         if(!filters) return list
         console.log(filters)
-        console.log(list.filter(item => item.diameter === filters))
+        console.log(list.filter(item => (item.diameter) && (item.type) === filters))
         return list.filter(item => item.type === filters)
     }
 

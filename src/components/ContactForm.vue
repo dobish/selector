@@ -13,6 +13,9 @@
 </template>
 
 <script>
+
+    import {AxiosInstance as axios} from "axios";
+
     export default {
         name: "ContactForm",
         data: function () {
@@ -45,6 +48,20 @@
                 }
 
                 e.preventDefault();
+
+                let vm = this;
+                axios.post('http://localhost:4000/sendmail', {
+                    from: this.email,
+                    name: this.name
+                })
+                .then(function (response) {
+                    vm.output = response.data;
+                })
+                .catch(function (error) {
+                    vm.output = error;
+                })
+
+
             },
             validEmail: function (email) {
                 var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
