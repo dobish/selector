@@ -67,10 +67,33 @@ transport.sendMail(message, function (err, info) {
 })*/
 
 app.post('/sendmail', function (req, res) {
-    let data = {
-        'from': req.body.email,
-    }
-    console.log(data)
-    res.send(data)
+    let message = {
+        from: req.body.from,
+        subject:'Subject',
+        to: 'to@email.com',
+        //'sender': req.body.name,
+        html: '<b> From: </b>' + req.body.name + "</br>" + "<b>Country: </b>" +  req.body.country + "</br>" + req.body.message
+    };
+
+    let transport = nodemailer.createTransport({
+        host: 'smtp.mailtrap.io',
+        port: 2525,
+        auth: {
+            user: 'deef4c8100a0e7',
+            pass: 'a5333715677dc0'
+        }
+    });
+
+    transport.sendMail(message, function (err, info) {
+        if(err) {
+            console.log(err)
+        } else {
+            console.log(info)
+        }
+    })
+
+    console.log(req.body)
+    console.log(message)
+    res.send(message)
 
 })

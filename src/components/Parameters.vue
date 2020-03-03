@@ -15,7 +15,7 @@
             >{{ type }}</div>
         </ul>
 <ContactForm></ContactForm>
-        <button type="submit">Show sensors</button>
+        <!--<button type="submit">Show sensors</button>-->
     </div>
 
 </template>

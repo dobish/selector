@@ -8,16 +8,16 @@
             <hr>
         </div>
         <h2>Loop 2</h2>
-        <div v-for="item in filterByAll" :key="item.name">
-            <p>{{ item.name }}</p>
-            <p>{{ item.type }}</p>
-            <p>{{ item.diameter }}</p>
+        <div v-for="(item, index) in filterByAll" :key="index+23">
+            <p><b>Name: </b>{{ item.name }}</p>
+            <p><b>Type: </b>{{ item.type }}</p>
+            <p><b>Diameter: </b>{{ item.diameter }}</p>
             <hr>
         </div>
-        <h2>Loop 3</h2>
+<!--        <h2>Loop 3</h2>
         <div v-for="(item, index) in filteringTry" :key="index+62">
             <p>{{ item.name }}</p>
-        </div>
+        </div>-->
     </div>
 </template>
 
@@ -36,8 +36,8 @@
                     {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm" },
                     {name: "DOL 27 with PNP 23", type: "PNP", diameter:"18mm" }
                     ],
-                type: 'PNP',
-                diameter: '44'
+                type: null,
+                diameter: null
             }
 
         },
@@ -92,12 +92,12 @@
             return getByDiameter(getByType(this.sensors, this.type), this.diameter)
             },
 
-            FilteringTry: function () {
+/*            FilteringTry: function () {
                return Array.prototype.forEach.call(this.variants, variants => {
                     return filterSensors(this.sensors, variants)
                 })
 
-            }
+            }*/
         },
         beforeMount(){
             this.get_data() //Fires the function on mount
@@ -108,6 +108,8 @@
             let loc = JSON.parse(localStorage.getItem("Parameters"))
             //let filter = vm.sensors.includes("SCR")
             console.log(loc)
+            vm.type = localStorage.getItem("type");
+            vm.diameter = localStorage.getItem("diameter")
             //const arr = vm.sensors.filter(d => d.type === 'SCR')
             //console.log(arr)
             console.log(vm.variants)
@@ -146,12 +148,12 @@
         return list.filter(item => item.diameter === diameter)
     }
 
-    function filterSensors(list, filters) {
+/*    function filterSensors(list, filters) {
         if(!filters) return list
         console.log(filters)
         console.log(list.filter(item => (item.diameter) && (item.type) === filters))
         return list.filter(item => item.type === filters)
-    }
+    }*/
 
 </script>
 

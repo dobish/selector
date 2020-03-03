@@ -12,18 +12,16 @@
 
         </ul>-->
         <form v-on:submit.prevent="onSubmit()">
-            <div id="parametersForm" action="" v-for="sensor in sensors" v-bind:key="sensor._id" >
-            <div>{{sensor.name}}</div>
-            <input type="button" v-for="(type, index) in sensor.types" :key="index" class="parameter-button" :value="type" :class="{highlight:selected.includes(type)}"
-                   @click="selected.includes(type) ? selected.splice(selected.indexOf(type), 1) : selected.push(type)">
+            <div id="parametersForm" action="" v-for="(sensor, i) in sensors" v-bind:key="sensor._id" >
+            <div>{{sensor.name}} {{ i }}</div>
+            <input type="button" v-for="(type, index) in sensor.types" :key="index" :value="type" class="parameter-button"   :class="{highlight:selected.includes(type)}"
+                   @click="valueSelection(type, $event, sensor.name)">
             </div>
             <button type="submit">Show Sensors</button>
         </form>
-        <p>{{$data.selected }}</p>
+        <p>Diameter: {{$data.selected}} {{}}</p>
         <ChosenSensor @params-submitted="displayParams"></ChosenSensor>
-        <ul>
-            <li v-for="(param, index) in params" v-bind:key="index"> {{ param}}</li>
-        </ul>
+
         <ContactForm></ContactForm>
     </div>
 </template>
@@ -41,7 +39,8 @@
             selected: [],
             clicked: false,
             isToggled: null,
-            params: []
+            params: [],
+            selection: {type: '', diameter: ''}
         }),
 
         mounted() {
@@ -76,7 +75,26 @@
             },
             displayParams: function (chosenParams) {
                 this.params.push(chosenParams)
+            },
+
+
+            valueSelection: function (type, e, s) {
+                this.selected.includes(type) ? this.selected.splice(this.selected.indexOf(type), 1) : this.selected.push(type);
+                console.log(e);
+                console.log(s);
+                let optionName = s.toLowerCase();
+                if(optionName === 'sensor types'){
+                    this.selection.type = type
+                    localStorage.setItem("type", type)
+                }
+
+                else if(optionName === 'diameter') {
+                    this.selection.diameter = type;
+                    localStorage.setItem("diameter", type)
+                }
             }
+
+
         },
         computed: {
             filteredSensors: function () {
