@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import axios from 'axios';
 import VueAxios from "vue-axios";
+import store from "./store"
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -32,6 +33,7 @@ new Vue({
 
   render: h => h(App),
   router: router,
-  L: L
+  L: L,
+  store
 
 }).$mount('#app')

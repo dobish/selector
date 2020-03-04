@@ -50,6 +50,7 @@
                     this.sensors = result;
                     //this.filteredProduct = result.filter(this.sensors = this.sensors.includes('a') )
                 });
+            console.log(this.$store.state.type)
         },
         methods: {
             log(message){
@@ -85,13 +86,16 @@
                 let optionName = s.toLowerCase();
                 if(optionName === 'sensor types'){
                     this.selection.type = type
-                    localStorage.setItem("type", type)
+                    localStorage.setItem("type", type);
+                    this.$store.commit('SET_TYPE', type);
                 }
 
                 else if(optionName === 'diameter') {
                     this.selection.diameter = type;
                     localStorage.setItem("diameter", type)
                 }
+
+
             }
 
 

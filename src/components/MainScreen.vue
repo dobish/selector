@@ -2,12 +2,19 @@
     <div>
         <p class="front-text">Choose sensor type:</p>
         <div class="buttons">
-                <div><router-link to="/">Climate</router-link></div>
-                <div><router-link to="/">Capacitive</router-link></div>
+                <div><router-link to="/">
+                    <button class="button">Climate</button>
+                </router-link></div>
+                <div><router-link to="/">
+                    <button class="button">Capacitive</button>
+                </router-link></div>
 
         </div>
         <div class="guidance">
-            <p class="">If you need guidance <button>Contact Us</button></p>
+            <p class="" v-show="!contact" @click="showContact">If you need guidance <button class="button">Contact Us</button></p>
+            <transition name="contactAnim">
+                <ContactForm v-show="contact"></ContactForm>
+            </transition>
         </div>
         <hr>
         <Dealer></Dealer>
@@ -16,10 +23,21 @@
 
 <script>
     import Dealer from "@/components/Dealer";
+    import ContactForm from "@/components/ContactForm";
     export default {
         name: "MainScreen",
         components: {
-            Dealer
+            Dealer,
+            ContactForm
+        },
+        data: () => ({
+           contact: false
+
+        }),
+        methods: {
+            showContact: function () {
+                this.contact = !this.contact
+            }
         }
     }
 </script>
@@ -33,16 +51,16 @@ html {
         margin-top: 45%;
         font-size: x-large;
     }
-    button {
-        border: 1.5px solid #004077;
+    .button {
+        border: 1px solid #004077;
         margin-right: 4%;
         border-radius: 20px;
-        padding: 1% 3% 0;
+        padding: 0 15px 0;
         display: inline-block;
-        background-color: white;
         color: #004077;
-        font-size: medium;
-        margin-top: 6%;
+        padding-top: 0.5%;
+        margin-bottom: 10%;
+        background-color: white;
         text-transform: uppercase;
     }
     .guidance {
@@ -70,4 +88,12 @@ html {
         text-transform: uppercase;
         font-size: medium;
     }
+
+.contactAnim-enter-active {
+    transition: all .3s;
+}
+
+.contactAnim-enter {
+    opacity: 0%;
+}
 </style>

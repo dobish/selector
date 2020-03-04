@@ -1,19 +1,27 @@
 <template>
     <div>
-        <h2>You have chosen:</h2>
-        <p v-for="(variant, index) in variants" v-bind:key="index"> {{ variant }}</p>
+        <h3>Best sensors for you</h3>
+            <div class="sensor-image">
+                <img alt="Vue logo" src="@/assets/DOL27.png">
+            </div>
+
         <hr>
-        <div v-for="sensor in filteredParameters" v-bind:key="sensor.name">
-            <p v-for="(value, name, index) in sensor" v-bind:key="value.objectID" >{{ index }}, {{ name }}: {{ value }}, {{value.objectID }}</p>
+        <ul v-for="(item, index) in filterByAll" :key="index+'Wahooo'">
+            <li @click="toggleParameter(item)">
+                {{ item.name }}
+                <ul class="sub-list">
+                    <li><span>Type: </span> {{ item.type }}</li>
+                    <li><span>Diameter: </span>{{ item.diameter }}</li>
+                </ul>
+            </li>
             <hr>
-        </div>
-        <h2>Loop 2</h2>
-        <div v-for="(item, index) in filterByAll" :key="index+23">
-            <p><b>Name: </b>{{ item.name }}</p>
-            <p><b>Type: </b>{{ item.type }}</p>
-            <p><b>Diameter: </b>{{ item.diameter }}</p>
-            <hr>
-        </div>
+        </ul>
+        <transition name="contactAnim">
+            <ContactForm v-show="contact"></ContactForm>
+        </transition>
+        <p v-show="!contact">If you need guidance <button @click="showContact" class="button">CONTACT US</button></p>
+
+
 <!--        <h2>Loop 3</h2>
         <div v-for="(item, index) in filteringTry" :key="index+62">
             <p>{{ item.name }}</p>
@@ -22,9 +30,9 @@
 </template>
 
 <script>
-
-
+    import ContactForm from "@/components/ContactForm";
     export default {
+        components: {ContactForm},
         name: "FinalScreen",
         data: function(){
             return {
@@ -34,10 +42,11 @@
                     {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm" },
                     {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm" },
                     {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm" },
-                    {name: "DOL 27 with PNP 23", type: "PNP", diameter:"18mm" }
+                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm" }
                     ],
                 type: null,
-                diameter: null
+                diameter: null,
+                contact: false
             }
 
         },
@@ -50,6 +59,13 @@
                     vm.filteredVariants = lclString
 
             },
+            showContact: function () {
+                this.contact = !this.contact
+            },
+
+            toggleParameter: function (sensor) {
+                console.log(sensor.name)
+            }
 
             //That might be the good I use currently!
 /*
@@ -92,6 +108,13 @@
             return getByDiameter(getByType(this.sensors, this.type), this.diameter)
             },
 
+            updateData: function () {
+                let vm = this
+                let type = localStorage.type;
+                return vm.type = type
+
+            }
+
 /*            FilteringTry: function () {
                return Array.prototype.forEach.call(this.variants, variants => {
                     return filterSensors(this.sensors, variants)
@@ -102,40 +125,31 @@
         beforeMount(){
             this.get_data() //Fires the function on mount
         },
+
+        //Assign values from state to local Data() onm Mount
         mounted(){
             var vm = this;
-            console.log(vm.sensors)
-            let loc = JSON.parse(localStorage.getItem("Parameters"))
+            //console.log(vm.sensors)
+            //let loc = JSON.parse(localStorage.getItem("Parameters"))
             //let filter = vm.sensors.includes("SCR")
-            console.log(loc)
-            vm.type = localStorage.getItem("type");
-            vm.diameter = localStorage.getItem("diameter")
+            //console.log(loc)
+            //vm.type = localStorage.getItem("type");
+            //vm.diameter = localStorage.getItem("diameter")
+            //console.log(localStorage)
             //const arr = vm.sensors.filter(d => d.type === 'SCR')
             //console.log(arr)
-            console.log(vm.variants)
+            //console.log(vm.variants)
             //Loops through observer objects and tries to match them with filtered computed (Chosen filters)
+            let store_type = vm.$store.getters.TYPE_GET;
+            let store_diameter = vm.$store.getters.DIAMETER_GET;
+            vm.type = store_type;
+            vm.diameter = store_diameter;
+            console.log(vm.$store.getters.TYPE_GET);
+            console.log(vm.$store.getters.DIAMETER_GET);
 
-            Array.prototype.forEach.call(this.sensors, sensors => {
-                //let lwr = types.toLowerCase()
-                console.log(sensors)
-                Array.prototype.forEach.call(this.variants, variants => {
-                    console.log(variants.toLowerCase())
-                    console.log(sensors.type.includes(variants))
-                })
-                //console.log(this.variants)
-                //console.log(sensors)
-                //console.log(this.sensors)
-                //console.log(sensors.type.includes(lwr) )
-            })
-
-            Array.prototype.forEach.call(this.variants, types => {
-                //let lwr = types.toLowerCase()
-                console.log(types)
-                console.log(this.sensors)
-                console.log(this.sensors.includes(this.variants) )
-            })
             return
-        }
+        },
+
 
     };
     function getByType(list, type) {
@@ -158,5 +172,67 @@
 </script>
 
 <style scoped>
+img {
+    margin: 0;
+}
+
+    hr{
+        border: .5px solid #e6e6e6;
+        width: 90%;
+    }
+
+    li {
+
+    }
+
+    ul{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .sub-list {
+        font-size: small;
+        text-align: left;
+        margin-left: 34%;
+        margin-top: 3%;
+        margin-bottom: 5%;
+    }
+
+    .sub-list > li > span {
+        color: #004077;
+        font-weight: bold;
+    }
+
+    .sub-list > li {
+        margin-top: 3%;
+    }
+    .button {
+        border: 1px solid #004077;
+        margin-right: 4%;
+        border-radius: 20px;
+        padding: 0 15px 0;
+        display: inline-block;
+        color: #004077;
+        padding-top: 0.5%;
+        margin-bottom: 5%;
+        background-color: white;
+    }
+    .sensor-image {
+        width: 70%;
+        margin-left: 15%;
+    }
+
+    .contactAnim-enter-active {
+        transition: all .3s;
+    }
+
+    .contactAnim-enter {
+        opacity: 0%;
+    }
+
+    h3 {
+        color: #707070;
+        font-weight: lighter;
+    }
 
 </style>

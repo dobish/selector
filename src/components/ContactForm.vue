@@ -1,6 +1,5 @@
 <template>
     <section id="contact">
-        <hr>
         <transition name="ease">
     <div class="container">
         <transition name="formTransition">
@@ -19,7 +18,7 @@
         </transition>
         <transition name="msgThanks">
         <div v-if="messageSent" class="thanks" style="transition-delay: .48s">
-            <h2>Thank you for your message {{ name }}!</h2>
+            <h2>Thank you for your message {{ name }}, we will get to you as soon as possible!</h2>
         </div>
         </transition>
     </div>
@@ -112,6 +111,9 @@
 
     #contact {
         width: 100vw;
+        background-color: #fafafa;
+        padding-top: 5%;
+        padding-bottom: 5%;
     }
     form input, textarea {
         width: 80%;
@@ -121,7 +123,11 @@
 
     }
 
-    .thanks {
+    .thanks > h2 {
+        font-size: medium;
+        font-weight: lighter;
+        padding: 0 5% 2% 5%;
+        margin: 0;
 
     }
 
