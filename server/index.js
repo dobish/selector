@@ -40,31 +40,7 @@ app.listen(port, () => {
 });
 
 
-//Email sending with nodemailer
-/*let transport = nodemailer.createTransport({
-    host: 'smtp.mailtrap.io',
-    port: 2525,
-    auth: {
-        user: 'deef4c8100a0e7',
-        pass: 'a5333715677dc0'
-    }
-});
 
-//Message content
-const message = {
-    from: 'test@test.com',
-    to: 'to@email.com',
-    subject: 'Subject field',
-    text: 'Email text'
-};
-
-transport.sendMail(message, function (err, info) {
-    if(err) {
-        console.log(err)
-    } else {
-        console.log(info)
-    }
-})*/
 
 app.post('/sendmail', function (req, res) {
     let message = {
@@ -72,7 +48,8 @@ app.post('/sendmail', function (req, res) {
         subject:'Subject',
         to: 'to@email.com',
         //'sender': req.body.name,
-        html: '<b> From: </b>' + req.body.name + "</br>" + "<b>Country: </b>" +  req.body.country + "</br>" + req.body.message
+        html: '<b> From: </b>' + req.body.name + "</br>" + "<b>Country: </b>" +  req.body.country
+        + "</br>" + req.body.parameters + "</br>" + req.body.message
     };
 
     let transport = nodemailer.createTransport({

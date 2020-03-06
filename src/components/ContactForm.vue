@@ -43,7 +43,8 @@
                 countries: countries,
                 selectedCountry: '',
                 errorClass: false,
-                messageSent: false
+                messageSent: false,
+                stateParameters: []
 
             }
         },
@@ -72,11 +73,22 @@
 
             postValues: function() {
                 let vm = this;
-                axios.post('http://localhost:4000/sendmaile', {
+                //------Loops through the getter object from the state and assigns it to data
+                    let obj = vm.$store.getters.PARAMETERS_GET
+                    let result = []
+                    for ( let i in obj) {
+                        result += '<b>' + i + '</b>' + ': ' + obj[i] + '<br>';
+                    }
+                    result += '<hr>'
+                    this.stateParameters = result;
+                //-----Post to the API (Sending email)
+                    console.log(result)
+                axios.post('http://localhost:4000/sendmail', {
                     from: this.email,
                     name: this.name,
                     message: this.textMessage,
-                    country: this.selectedCountry
+                    country: this.selectedCountry,
+                    parameters: this.stateParameters
                 })
                     .then(function (response) {
                         vm.output = response.data;
@@ -86,6 +98,8 @@
                     })
                 this.messageSent = !this.messageSent
             },
+
+
 
             validEmail: function (email) {
                 var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

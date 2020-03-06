@@ -5,26 +5,35 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        type: '',
-        diameter: '',
         msg: 'Hello from Vuex',
-        count: 0
+        count: 0,
+        parameters: {
+            type: '',
+            diameter: ''
+        }
     },
     getters: {
         TYPE_GET(state){
-            return state.type;
+            return state.parameters.type;
         },
         DIAMETER_GET(state){
-            return state.diameter;
+            return state.parameters.diameter;
         },
+       PARAMETERS_GET(state) {
+            return state.parameters//let p = state.parameters;
+
+/*       for (let i in state.parameters) {
+                return i
+            }*/
+        }
     },
     mutations: {
         SET_TYPE(state, payload) {
-            state.type = payload;
+            state.parameters.type = payload;
         },
 
         SET_DIAMETER(state, payload) {
-            state.diameter = payload;
+            state.parameters.diameter = payload;
         }
     },
     actions: {}

@@ -18,7 +18,7 @@
 
 
         <router-link :to="{path: '/final'}">
-            <button class="parameter-button">GIMME THAT SENSORS</button>
+            <button class="parameter-button">SHOW SENSORS</button>
         </router-link>
 
 
