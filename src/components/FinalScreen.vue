@@ -132,19 +132,10 @@
             this.get_data() //Fires the function on mount
         },
 
-        //Assign values from state to local Data() onm Mount
+        //Assign values from state to local Data() on Mount
         mounted(){
             var vm = this;
-            //console.log(vm.sensors)
-            //let loc = JSON.parse(localStorage.getItem("Parameters"))
-            //let filter = vm.sensors.includes("SCR")
-            //console.log(loc)
-            //vm.type = localStorage.getItem("type");
-            //vm.diameter = localStorage.getItem("diameter")
-            //console.log(localStorage)
-            //const arr = vm.sensors.filter(d => d.type === 'SCR')
-            //console.log(arr)
-            //console.log(vm.variants)
+
             //Loops through observer objects and tries to match them with filtered computed (Chosen filters)
             let store_type = vm.$store.getters.TYPE_GET;
             let store_diameter = vm.$store.getters.DIAMETER_GET;

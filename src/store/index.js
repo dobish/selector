@@ -29,12 +29,22 @@ export default new Vuex.Store({
     },
     mutations: {
         SET_TYPE(state, payload) {
-            state.parameters.type = payload;
+            if (state.parameters.type === payload) {
+                this.state.parameters.type = ''
+            }else {
+                state.parameters.type = payload;
+            }
+
         },
 
         SET_DIAMETER(state, payload) {
-            state.parameters.diameter = payload;
-        }
+            if (state.parameters.diameter === payload) {
+                state.parameters.diameter = ''
+            } else {
+                state.parameters.diameter = payload;
+            }
+            }
+
     },
     actions: {}
 });

@@ -22,15 +22,17 @@ export default {
     data: function(){
         return {
         toggled: false,
-        selected: []
+        selected: [],
+            selection: {type: '', diameter: '', thread: '', delay: ''},
         }
     },
     methods: {
         toggleParams: function (name) {
-            this.toggled = !this.toggled
+            this.toggled = !this.toggled;
             console.log("button " + name + " was clicked")
         },
-        selectParameter: function (type ) {
+        selectParameter: function (type, name) {
+            let optionName = name.toLowerCase()
             console.log(type)
             // Adds class if the button was pressed. If it already has that class, class is removed
             if (this.selected.includes(type)) {
@@ -39,6 +41,21 @@ export default {
                 this.selected = [];
                 this.selected.push(type)
             }
+            if(optionName === 'sensor types'){
+                //vm.selection.type === type ? vm.selection.type = null : vm.selection.type = null
+                this.selection.type = type
+                this.$store.commit('SET_TYPE', type);
+                console.log(this.$store.getters.TYPE_GET)
+            }
+
+            else if(optionName === 'diameter') {
+                this.selection.diameter = type;
+                localStorage.setItem("diameter", type);
+
+                this.$store.commit('SET_DIAMETER', type)
+                console.log(this.$store.getters.DIAMETER_GET)
+            }
+
             }
         }
 

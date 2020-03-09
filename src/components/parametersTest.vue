@@ -9,6 +9,9 @@
         <div v-for="(sensor) in sensors" :key="sensor._id">
             <Parameter  :sensor="sensor"></Parameter>
         </div>
+        <router-link :to="{path: '/final'}">
+            <button class="parameter-button">SHOW SENSORS</button>
+        </router-link>
     </div>
 </template>
 
