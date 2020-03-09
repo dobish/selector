@@ -9,10 +9,16 @@ import FinalScreen from "@/components/FinalScreen";
 import testFilter from "@/components/testFilter";
 import Dealer from "@/components/Dealer";
 import testAxio from "@/components/testAxio";
+import LoadingTest from "@/components/LoadingTest";
+import Parameter from "@/components/Parameter";
+import parametersTest from "@/components/parametersTest";
+
 
 
 export default [
     { path: '/', component: Parameters },
+    { path: '/parameter', component: Parameter },
+    { path: '/paramtest', component: parametersTest },
     { path: '/hello', component: HelloWorld},
     { path: '/index', component: MainScreen},
     { path: '/contact', component: ContactForm},
@@ -22,6 +28,7 @@ export default [
     { path: '/final', component: FinalScreen},
     { path: '/filter', component: testFilter},
     { path: '/dealer', component: Dealer},
-    { path: '/axio', component: testAxio}
+    { path: '/axio', component: testAxio},
+    { path: '/loader', component: LoadingTest}
 
 ]

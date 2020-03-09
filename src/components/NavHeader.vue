@@ -1,17 +1,19 @@
 <template>
+  <div>
   <header>
   <nav class="mobile-nav-wrap" role="navigation">
-    <ul class="mobile-header-nav">
-      <li><a href="#">Nav Item 1</a></li>
-      <li><a href="#">Nav Item 2</a></li>
-      <li><a href="#">Nav Item 3</a></li>
-    </ul>
+    <div>
+      <img class="logo-img" src="../assets/Dol-Sensors-long_white.png" alt="">
+    </div>
   </nav>
   </header>
+  </div>
 </template>
 
 <script>
+
 export default {
+  components: {},
   name: 'NavHeader',
   props: {
     msg: String
@@ -56,26 +58,29 @@ a {
   top: 100px;
   width: 100%;
 }
-.mobile-header-nav li {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-.mobile-header-nav li a {
-  color: white;
-  display: block;
-  padding: 15px 0;
-  text-align: center;
-  text-decoration: none;
-  transition: all 0.3s ease-in-out;
-}
-header {
+
+.mobile-nav-wrap{
   box-shadow: 0px 5px 5px #999;
-  height: 70px;
-  position: relative;
+  height: 8vh;
+  position: fixed;
+  z-index: 100000;
+  top: 0;
   width: 100%;
   background-color: #004077;
 }
-.mobile-header-nav li a:hover {
-  background-color: #2f2f2f;
+
+.logo-img {
+  height: 70%;
+  margin-top: 2%;
+}
+
+nav > div {
+  height: 100%;
+  overflow: auto;
+}
+
+header {
+
 }
 
 </style>

@@ -4,10 +4,6 @@
         <div class="sensor-image">
             <img alt="Vue logo" src="@/assets/DOL26.png">
         </div>
-
-<!--  <li v-for="parameter in parameters" v-bind:key="parameter.name" v-bind:class="{toggled: isToggled}">{{ parameter.name }}<button @click="isToggled = !isToggled">Click</button></li>-->
-
-
         <ul v-for="(sensor, index) in sensors" v-bind:key="index">
             <li>{{sensor.name}}</li>
             <button v-for="(type, index) in sensor.types" :key="index" class="parameter-button" :class="{highlight:selected.includes(type)}"
@@ -15,25 +11,21 @@
             >{{ type }}</button>
             <hr>
         </ul>
-
-
         <router-link :to="{path: '/final'}">
             <button class="parameter-button">SHOW SENSORS</button>
         </router-link>
-
-
-        <!--<button type="submit">Show sensors</button>-->
+            <ContactForm></ContactForm>
     </div>
 
 </template>
 
 <script>
+    import ContactForm from "@/components/ContactForm";
     const API_URL = "http://localhost:4000/sensors";
-
 export default {
   name: 'Parameters',
   components: {
-
+    ContactForm
   },
   props: ['msg'],
   data: function(){
@@ -45,7 +37,8 @@ export default {
         visible: false,
         sensors: [],
         selected: [],
-        selection: {type: '', diameter: '', thread: '', delay: ''}
+        selection: {type: '', diameter: '', thread: '', delay: ''},
+
     }
   },
     mounted() {
@@ -140,5 +133,11 @@ export default {
         .container {
             width: 100%;
         }
+
+  img {
+      width: 100%;
+      position: relative;
+      margin-bottom: 8%;
+  }
 
 </style>

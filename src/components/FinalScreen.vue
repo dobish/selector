@@ -1,8 +1,11 @@
 <template>
     <div>
+
+        <div class="lds-ring" v-show="!loaded"><div></div><div></div><div></div><div></div></div>
+        <div class="container" v-show="loaded">
         <h3>Best sensors for you</h3>
             <div class="sensor-image">
-                <img alt="Vue logo" src="@/assets/DOL27.png">
+                <img alt="Vue logo" src="@/assets/DOL27.png" @load="onLoad()">
             </div>
 
         <hr>
@@ -16,11 +19,8 @@
             </li>
             <hr>
         </ul>
-        <transition name="contactAnim">
-            <ContactForm v-show="contact"></ContactForm>
-        </transition>
-        <p v-show="!contact">If you need guidance <button @click="showContact" class="button">CONTACT US</button></p>
-
+            <ContactForm></ContactForm>
+        </div>
 
 <!--        <h2>Loop 3</h2>
         <div v-for="(item, index) in filteringTry" :key="index+62">
@@ -46,7 +46,8 @@
                     ],
                 type: null,
                 diameter: null,
-                contact: false
+                contact: false,
+                loaded: false
             }
 
         },
@@ -65,6 +66,11 @@
 
             toggleParameter: function (sensor) {
                 console.log(sensor.name)
+            },
+
+            onLoad: function() {
+                console.log("LOADING");
+                this.loaded = !this.loaded;
             }
 
             //That might be the good I use currently!
@@ -180,6 +186,9 @@ img {
         border: .5px solid #e6e6e6;
         width: 90%;
     }
+    .container {
+        margin-top: 10vh;
+    }
 
     li {
 
@@ -227,12 +236,63 @@ img {
     }
 
     .contactAnim-enter {
-        opacity: 0%;
+        opacity: 0;
+    }
+
+    .slide-enter {
+        opacity: 0;
+    }
+
+    .slide-enter-active, .slide-leave-active {
+        transition: all 5s;
     }
 
     h3 {
         color: #707070;
         font-weight: lighter;
     }
+
+
+img {
+    width: 100%;
+    position: relative;
+
+}
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin-top: 50%;
+}
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #004077 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
 </style>

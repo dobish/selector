@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <NavHeader></NavHeader>
+    <transition name="fade" mode="out-in">
       <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -48,10 +50,20 @@ body {
 
 
 
-img {
- width: 100%;
-  position: relative;
-  margin-bottom: 8%;
+
+
+
+.fade-enter-active, .fade-leave-active {
+  transition: all .3s ease;
 }
+.fade-enter/* .fade-leave-active below version 2.1.8 */ {
+  transform: translateX(50%);
+  opacity: 0;
+}
+
+  .fade-leave-to {
+    transform: translateX(-50%);
+    opacity: 0;
+  }
 
 </style>

@@ -11,10 +11,7 @@
 
         </div>
         <div class="guidance">
-            <p class="" v-show="!contact" @click="showContact">If you need guidance <button class="button">Contact Us</button></p>
-            <transition name="contactAnim">
-                <ContactForm v-show="contact"></ContactForm>
-            </transition>
+                <ContactForm ></ContactForm>
         </div>
         <hr>
         <Dealer></Dealer>
