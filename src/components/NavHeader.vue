@@ -35,7 +35,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
-  margin: 40px 0 0;
+
 }
 ul {
   list-style-type: none;
@@ -60,17 +60,16 @@ a {
 }
 
 .mobile-nav-wrap{
-  box-shadow: 0px 5px 5px #999;
-  height: 8vh;
+  height: 10vh;
   position: fixed;
-  z-index: 100000;
+  z-index: -1;
   top: 0;
   width: 100%;
   background-color: #004077;
 }
 
 .logo-img {
-  height: 70%;
+  height: 50%;
   margin-top: 2%;
 }
 

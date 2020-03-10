@@ -178,7 +178,7 @@ img {
         width: 90%;
     }
     .container {
-        margin-top: 10vh;
+        margin-top: 7vh;
     }
 
     li {

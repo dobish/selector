@@ -2,7 +2,7 @@
   <div id="app">
     <NavHeader></NavHeader>
     <transition name="fade" mode="out-in">
-      <router-view></router-view>
+      <router-view class="main-view"></router-view>
     </transition>
   </div>
 </template>
@@ -38,6 +38,8 @@ export default {
 html {
   padding: 0;
   margin: 0;
+  height: 100vh;
+  background-color: #fcfcfc;
 }
 
 NavHeader {
@@ -46,6 +48,13 @@ NavHeader {
 
 body {
   margin: 0;
+
+}
+
+.main-view {
+  background-color: #fcfcfc;
+  border-radius: 20px;
+  margin-top: 7vh;
 }
 
 

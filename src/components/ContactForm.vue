@@ -135,10 +135,10 @@
     }
 
     #contact {
-        width: 100vw;
-        background-color: #fafafa;
+        width: 100%;
         padding-top: 3%;
         padding-bottom: 3%;
+
     }
     form input, textarea {
         width: 80%;
