@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer');
+const path = require('path');
 
 const sensors = require('./db/sensors');
 
@@ -12,13 +13,32 @@ app.use(morgan('tiny'));
 app.use(cors());
 app.use(bodyParser.json());
 
+
+
+//Deployment section
+app.use(express.static(__dirname + '/../dist/'));
+
+app.get(/.*/, function (req, res) {
+    res.sendfile(path.resolve( __dirname + '/../dist/index.html'));
+
+});
+
+/*if (!process.env.NODE_ENV === 'production') {
+
+}*/
+
+// Deployment section
+
+
 app.get('/', (req, res) => {
     res.json({
         message: 'Behold The MEVN Stack!'
     });
 });
 
-app.get('/sensors', (req, res) => {
+
+
+app.get('/api/sensors', (req, res) => {
     sensors.getAll().then((sensors) => {
         res.json(sensors);
     });

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    const API_URL = "http://localhost:4000/sensors";
+    const API_URL = "api/sensors";
     import Parameter from "@/components/Parameter";
     export default {
         props: {
@@ -42,7 +42,9 @@
         },
         mounted() {
             fetch(API_URL)
-                .then(response => response.json())
+                //.then(response => response.json())
+                .then(response => response.text())
+                .then(text => console.log(text))
                 .then(result => {
                     this.sensors = result;
                 });
