@@ -39,13 +39,14 @@
                 variants: "",
                 filteredVariants: "",
                 sensors: [
-                    {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm" },
-                    {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm" },
-                    {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm" },
-                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm" }
+                    {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
+                    {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
+                    {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
+                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" }
                     ],
                 type: null,
                 diameter: null,
+                tags: null,
                 contact: false,
                 loaded: false
             }
@@ -111,7 +112,7 @@
                 return filtered;*/
             },
             filterByAll: function () {
-            return getByDiameter(getByType(this.sensors, this.type), this.diameter)
+            return getBySearch(getByDiameter(getByType(this.sensors, this.type), this.diameter), this.tags)
             },
 
             updateData: function () {
@@ -139,10 +140,13 @@
             //Loops through observer objects and tries to match them with filtered computed (Chosen filters)
             let store_type = vm.$store.getters.TYPE_GET;
             let store_diameter = vm.$store.getters.DIAMETER_GET;
+            let store_tags = vm.$store.getters.TAG_GET;
             vm.type = store_type;
             vm.diameter = store_diameter;
+            vm.tags = store_tags;
             console.log(vm.$store.getters.TYPE_GET);
             console.log(vm.$store.getters.DIAMETER_GET);
+            console.log(store_tags);
 
             return
         },
@@ -158,6 +162,15 @@
         if(!diameter) return list
         return list.filter(item => item.diameter === diameter)
     }
+
+    function getBySearch(list, search) {
+        if(!search) return list;
+        return list.filter(item => item.all === search)
+    }
+
+/*    function getByName(list, name) {
+        return 0
+    }*/
 
 /*    function filterSensors(list, filters) {
         if(!filters) return list
@@ -178,7 +191,7 @@ img {
         width: 90%;
     }
     .container {
-        margin-top: 7vh;
+        padding-top: 5vh;
     }
 
     li {
@@ -241,6 +254,7 @@ img {
     h3 {
         color: #707070;
         font-weight: lighter;
+        margin-top: 0px;
     }
 
 

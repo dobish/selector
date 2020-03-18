@@ -7,7 +7,7 @@
                     <div class="card">
                         <section class="card-text">
                             <h3 class="sensor-type">Capacitive</h3>
-                            <p class="sensor-description">Sensors for feed</p>
+                            <p class="sensor-description">Feed sensors</p>
                         </section>
                     </div>
                 </router-link>
@@ -77,7 +77,6 @@ a {
 }
 
 .index-container {
-    margin-top: 7vh;
     padding-top: 20%;
 }
 

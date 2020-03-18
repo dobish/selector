@@ -9,7 +9,8 @@ export default new Vuex.Store({
         count: 0,
         parameters: {
             type: '',
-            diameter: ''
+            diameter: '',
+            tag: ''
         }
     },
     getters: {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
         },
         DIAMETER_GET(state){
             return state.parameters.diameter;
+        },
+        TAG_GET(state){
+            return state.parameters.tag;
         },
        PARAMETERS_GET(state) {
             return state.parameters//let p = state.parameters;
@@ -43,7 +47,10 @@ export default new Vuex.Store({
             } else {
                 state.parameters.diameter = payload;
             }
-            }
+            },
+        SET_TAG(state, payload) {
+            state.parameters.tag = payload;
+        }
 
     },
     actions: {}

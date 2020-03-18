@@ -12,6 +12,8 @@ import testAxio from "@/components/testAxio";
 import LoadingTest from "@/components/LoadingTest";
 import Parameter from "@/components/Parameter";
 import parametersTest from "@/components/parametersTest";
+import NavHeader from "@/components/NavHeader";
+import search from "@/components/search";
 
 
 
@@ -29,6 +31,9 @@ export default [
     { path: '/filter', component: testFilter},
     { path: '/dealer', component: Dealer},
     { path: '/axio', component: testAxio},
-    { path: '/loader', component: LoadingTest}
+    { path: '/loader', component: LoadingTest},
+    { path: '/nav', component: NavHeader},
+    { path: '/search', component: search}
+
 
 ]

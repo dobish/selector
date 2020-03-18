@@ -1,12 +1,11 @@
 <template>
-    <div class="container">
+    <div class="container" >
         <div class="sensor-name" @click="toggleParams(sensor.name)">{{ sensor.name }}</div>
         <div v-if="toggled">
         <button v-for="(type, index) in sensor.types" :key="index+42" class="parameter-button" :class="{highlight:selected.includes(type)}"
                 @click="selectParameter(type, sensor.name)"
         >{{ type }}</button>
         </div>
-        <hr>
     </div>
 </template>
 
@@ -79,10 +78,13 @@ export default {
     .sensor-name {
         margin-top: 5%;
         margin-bottom: 5%;
+        padding-bottom: 5%;
     }
 
     .container {
         width: 100%;
+        padding-top: 2%;
+
     }
 
     img {

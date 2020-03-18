@@ -27,7 +27,7 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Work Sans", Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -40,21 +40,23 @@ html {
   margin: 0;
   height: 100vh;
   background-color: #fcfcfc;
+  overflow-x: hidden !important;
 }
 
 NavHeader {
   margin: 0;
+  position: fixed;
 }
 
 body {
   margin: 0;
-
+  overflow-x: hidden !important;
+  margin-top: 10vh;
 }
 
 .main-view {
   background-color: #fcfcfc;
   border-radius: 20px;
-  margin-top: 7vh;
 }
 
 

@@ -3,14 +3,18 @@
         <!--<div v-for="(sensor, index) in sensors" :key="index">
         </div>-->
 
-        <div class="sensor-image">
+    <!--  <div class="sensor-image">
             <img alt="Vue logo" src="@/assets/DOL26.png">
-        </div>
+        </div>-->
+
+
+
+
         <div class="value-card" v-for="(sensor) in sensors" :key="sensor._id">
             <Parameter  :sensor="sensor"></Parameter>
         </div>
         <router-link :to="{path: '/final'}">
-            <button class="parameter-button">SHOW SENSORS</button>
+            <button class="submit-button">SHOW SENSORS</button>
         </router-link>
     </div>
 </template>
@@ -29,6 +33,7 @@
                 title: 'parameters',
                 sensors: [],
                 selected: [],
+                images: ['DOL27_M30.jpg', '../assets/Sensors/DOL26.jpg', '../assets/Sensors/DOL26_18.jpg']
 
             }
         },
@@ -60,6 +65,29 @@
 
     .value-card {
         background-color: white;
+        width: 90%;
+        margin-left: 5%;
+        margin-bottom: 2%;
+        border-radius: 10px;
+        -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+        -moz-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+        box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
     }
 
+    .image-card{
+        background-color: white;
+        width: 100%;
+        height: 200px;
+    }
+
+    .submit-button {
+        border: 1px solid #004077;
+        border-radius: 20px;
+        display: inline-block;
+        color: white;
+        margin-bottom: 5%;
+        background-color: #004077;
+        margin-top: 5%;
+        padding: 1% 4%;
+    }
 </style>

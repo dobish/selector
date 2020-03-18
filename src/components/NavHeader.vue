@@ -2,11 +2,39 @@
   <div>
   <header>
   <nav class="mobile-nav-wrap" role="navigation">
-    <div>
-      <img class="logo-img" src="../assets/Dol-Sensors-long_white.png" alt="">
-    </div>
+  <transition name="fade">
+      <div class="logo" >
+        <router-link to="/index">
+        <img class="logo-img" src="../assets/Dol-Sensors-long_white.png" alt="">
+    </router-link>>
+      </div>
+  </transition>
+    <transition name="searchfade">
+      <div class="search" :class="{ searchToggled : toggled }">
+        <div class="search-holder">
+          <img class="search-img"  @click="searchToggle()" src="../assets/search_icon_selector.png" alt="">
+        </div>
+        <div class="input-holder">
+          <input class="search-field" type="text" v-model="findSensor">
+        </div>
+      </div>
+    </transition>
   </nav>
   </header>
+    <transition name="slideUp">
+      <div class="search-container" v-if="toggled">
+        <div class="sensor-list">
+          <ul  style="margin: 0; ">
+            <li v-for="(sensor, index) in filterSearch" :key="index" style="margin: 20px; display: block" @click="sensorAssign(sensor.all)">
+             <router-link to="/final" >
+              {{ sensor.name }}
+             </router-link>
+             <hr style="margin-top: 20px">
+          </li>
+         </ul>
+      </div>
+    </div>
+    </transition>
   </div>
 </template>
 
@@ -20,13 +48,55 @@ export default {
   },
   data: function(){
     return {
-      title: 'dol-sensors'
+      title: 'dol-sensors',
+      toggled: false,
+      sensors: [
+        {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
+        {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
+        {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
+        {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
+        {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
+        {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
+        {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
+        {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
+        {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
+        {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
+        {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
+        {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
+        {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
+        {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
+        {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
+        {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
+        {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
+        {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
+        {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
+        {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
+        {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
+        {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
+        {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
+        {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
+      ],
+      findSensor: null
     }
   },
   methods: {
-    menu: function(){
+    searchToggle: function(){
+      this.toggled = !this.toggled
+    },
 
+    sensorAssign: function (tag) {
+      this.$store.commit('SET_TAG', tag);
+      this.toggled = !this.toggled;
     }
+  },
+
+  computed: {
+    filterSearch() {
+      return this.sensors.filter( sensor => {
+        return !this.findSensor ||
+                sensor.all.toLowerCase().indexOf(this.findSensor.toLowerCase()) > -1
+      })
+    },
   }
 }
 
@@ -34,9 +104,100 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+
+body {
+
+}
+
 h3 {
 
 }
+
+header {
+  height: 10%;
+}
+
+.search-container {
+  height: 85vh;
+  background-color: #fcfcfc;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  width: 100%;
+  overflow-y: auto;
+  padding-top: 4vh;
+  padding-bottom: 4vh;
+  overscroll-behavior: contain;
+  position: absolute;
+  z-index: 111111;
+}
+
+.sensor-list {
+  overflow: auto;
+
+}
+
+.logo {
+  float:left;
+  display:inline;
+  width: 80%;
+  height: 100%;
+  transition: margin-left .25s;
+  background-color: #004077;
+}
+
+.search {
+  width: 100%;
+  background-color: #064D8A;
+  padding: 0 2% 0 2%;
+  position: absolute;
+  top: 0;
+  left: 80%;
+  z-index: 100;
+  transition: all .3s;
+}
+
+.search-holder {
+  width: 20%;
+  float: left;
+  margin-top: 6%;
+}
+
+.input-holder {
+  width: 80%;
+  float: left;
+  margin-top: 5%;
+}
+
+.logo-img {
+  height: 30%;
+  padding-top: 3%;
+}
+
+.search-img {
+  height: 10%;
+  width: 30%;
+
+}
+
+.logoToggled {
+  margin-left: 0%;
+}
+
+.searchToggled {
+  left: 0 !important;
+}
+
+.search-field {
+  margin-bottom: 5%;
+  display: inline-block;
+  border-radius: 20px;
+  border: none;
+  width: 80%;
+  padding: 2% 2%;
+  margin-right: 10%;
+}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -60,18 +221,30 @@ a {
 }
 
 .mobile-nav-wrap{
-  height: 10vh;
+  height: 20vh;
   position: fixed;
   z-index: -1;
   top: 0;
   width: 100%;
-  background-color: #004077;
+  max-width: 100%;
 }
 
-.logo-img {
-  height: 50%;
-  margin-top: 2%;
+.fade-enter-active, .fade-leave-active {
+  transition: all .3s;
 }
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.searchfade-enter-active, .searchfade-leave-active {
+  transition: all 3s;
+}
+
+.searchfade-enter, .searchfade-leave-to {
+  opacity: 0;
+}
+
 
 nav > div {
   height: 100%;
@@ -81,5 +254,14 @@ nav > div {
 header {
 
 }
+
+.slideUp-enter, .slideUp-leave-to {
+ opacity: 0;
+  transform: translateY(70%);
+}
+
+  .slideUp-enter-active, .slideUp-leave-active {
+    transition: all 0.3s;
+  }
 
 </style>
