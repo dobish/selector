@@ -18,6 +18,12 @@ app.use(bodyParser.json());
 //Deployment section
 app.use(express.static(__dirname + '/../dist/'));
 
+app.get('/api/sensors', (req, res) => {
+    sensors.getAll().then((sensors) => {
+        res.json(sensors);
+    });
+});
+
 app.get(/.*/, function (req, res) {
     res.sendfile(path.resolve( __dirname + '/../dist/index.html'));
 

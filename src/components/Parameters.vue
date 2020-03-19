@@ -42,9 +42,9 @@
         },
         mounted() {
             fetch(API_URL)
-                //.then(response => response.json())
-                .then(response => response.text())
-                .then(text => console.log(text))
+                .then(response => response.json())
+                //.then(response => response.text())
+                //.then(text => console.log(text))
                 .then(result => {
                     this.sensors = result;
                 });

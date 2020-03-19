@@ -54,11 +54,11 @@
         },
         methods: {
             get_data: function () {
-                var vm = this;
-                    let lclstrg = JSON.parse(localStorage.getItem("Parameters"))//Get parameters from local storage and turn it into Array
-                    vm.variants = lclstrg// assign values from local storage to data()
-                    let lclString = lclstrg.toString().toLowerCase()
-                    vm.filteredVariants = lclString
+                //var vm = this;
+                    //let lclstrg = JSON.parse(localStorage.getItem("Parameters"))//Get parameters from local storage and turn it into Array
+                    //vm.variants = lclstrg// assign values from local storage to data()
+                    //let lclString = lclstrg.toString().toLowerCase()
+                    //vm.filteredVariants = lclString
 
             },
             showContact: function () {
