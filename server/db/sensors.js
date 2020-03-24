@@ -1,5 +1,19 @@
 const Joi = require('joi');
 const db = require('./connection');
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+
+//Schema
+const parameter = new Schema ({
+    name: String,
+    types: Array
+});
+
+//Model
+const Parameter = mongoose.model('parameter', parameter);
+
+
 
 const schema = Joi.object().keys({
     name: Joi.string().required(),
@@ -7,10 +21,12 @@ const schema = Joi.object().keys({
 
 });
 
-const sensors = db.get('sensors');
+const sensors = db.get('parameters');
 
 function getAll() {
-    return sensors.find();
+    //return sensors.find();
+    console.log(Parameter)
+    return Parameter.find()
 }
 
 function create(sensor) {
@@ -27,5 +43,7 @@ function create(sensor) {
 
 module.exports = {
     create,
-    getAll
+    getAll,
+    Parameter
 };
+
