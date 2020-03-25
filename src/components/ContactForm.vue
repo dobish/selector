@@ -88,7 +88,7 @@
                     this.stateParameters = result;
                 //-----Post to the API (Sending email)
                     console.log(result)
-                axios.post('http://localhost:4000/sendmail', {
+                axios.post('/sendmail', {
                     from: this.email,
                     name: this.name,
                     message: this.textMessage,

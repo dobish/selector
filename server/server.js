@@ -57,13 +57,6 @@ app.get('/', (req, res) => {
 });
 
 
-
-app.get('/api/sensors', (req, res) => {
-    sensors.getAll().then((sensors) => {
-        res.json(sensors);
-    });
-});
-
 app.post('/sensors', (req, res) => {
     console.log(req.body);
     sensors.create(req.body).then((message) => {
