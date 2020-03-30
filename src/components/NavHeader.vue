@@ -12,7 +12,7 @@
     <transition name="searchfade">
       <div class="search" :class="{ searchToggled : toggled }">
         <div class="search-holder">
-          <img class="search-img"  @click="searchToggle()" src="../assets/search_icon_selector.png" alt="">
+          <img class="search-img"  @click="searchToggle()" src="../assets/search_icon_selector_blue.png" alt="">
         </div>
         <div class="input-holder">
           <input class="search-field" type="text" v-model="findSensor">
@@ -148,7 +148,7 @@ header {
 
 .search {
   width: 100%;
-  background-color: #064D8A;
+  background-color: #004077;
   padding: 0 2% 0 2%;
   position: absolute;
   top: 0;
@@ -158,9 +158,13 @@ header {
 }
 
 .search-holder {
-  width: 20%;
+  width: 50px;
   float: left;
-  margin-top: 6%;
+  height: 50px;
+  background-color: white;
+  border-radius: 50%;
+  margin-top: 3%;
+  margin-left: 2%;
 }
 
 .input-holder {
@@ -175,8 +179,9 @@ header {
 }
 
 .search-img {
-  height: 10%;
-  width: 30%;
+  height: auto;
+  width: 46%;
+  margin-top: 23%;
 
 }
 
@@ -195,7 +200,7 @@ header {
   border: none;
   width: 80%;
   padding: 2% 2%;
-  margin-right: 10%;
+  margin-right: 3%;
 }
 
 ul {

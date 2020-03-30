@@ -32,14 +32,8 @@ export default {
         },
         selectParameter: function (type, name) {
             let optionName = name.toLowerCase()
+
             console.log(type)
-            // Adds class if the button was pressed. If it already has that class, class is removed
-            if (this.selected.includes(type)) {
-                this.selected = [];
-            } else {
-                this.selected = [];
-                this.selected.push(type)
-            }
             if(optionName === 'sensor types'){
                 //vm.selection.type === type ? vm.selection.type = null : vm.selection.type = null
                 this.selection.type = type
@@ -54,9 +48,27 @@ export default {
                 this.$store.commit('SET_DIAMETER', type)
                 console.log(this.$store.getters.DIAMETER_GET)
             }
+            // Adds class if the button was pressed. If it already has that class, class is removed
+/*            if (this.selected.includes(type)) {
+                this.selected = [];
+            } else {
+                this.selected = [];
+                this.selected.push(type)
+            }*/
+                this.selected = [];
+                this.selected.push(this.$store.getters.DIAMETER_GET, this.$store.getters.TYPE_GET);
+                //this.selected.push(getType);
+
 
             }
-        }
+        },
+    mounted() {
+        let type = this.$store.getters.TYPE_GET;
+        let diameter = this.$store.getters.DIAMETER_GET;
+
+        this.selected = [];
+        this.selected.push(type, diameter);
+    }
 
 }
 
