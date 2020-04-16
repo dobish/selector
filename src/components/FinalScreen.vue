@@ -3,52 +3,88 @@
 
         <div class="lds-ring" v-show="!loaded"><div></div><div></div><div></div><div></div></div>
         <div class="container" v-show="loaded">
-        <h3>Best sensors for you</h3>
-            <div class="sensor-image">
+        <h3 v-show="$mq === 'mobile'">Best sensors for you</h3>
+            <div class="sensor-image" v-show="$mq === 'mobile'">
                 <img alt="Vue logo" src="@/assets/DOL27.png" @load="onLoad()">
             </div>
-
-        <hr>
-        <ul v-for="(item, index) in filterByAll" :key="index+'Wahooo'">
+            <main>
+        <hr v-show="$mq === 'mobile'">
+        <ul v-for="(item, index) in filterByAll" :key="index+'Wahooo'" class="card">
             <li @click="toggleParameter(item)">
-                {{ item.name }}
+                <div v-show="$mq === 'mobile'">{{ item.name }}</div>
                 <ul class="sub-list">
+                    <li v-show="$mq === 'desktop'"><img src="@/assets/DOL27.png" alt=""></li>
+                    <li v-show="$mq === 'desktop'"><h2>{{ item.name }}</h2></li>
                     <li><span>Type: </span> {{ item.type }}</li>
                     <li><span>Diameter: </span>{{ item.diameter }}</li>
+                    <li><span>Delay: </span>{{ item.delay }}</li>
                 </ul>
             </li>
-            <hr>
+            <hr v-show="$mq === 'mobile' ">
         </ul>
-            <ContactForm></ContactForm>
+            </main>
+            <ContactForm v-show="$mq === 'mobile'"></ContactForm>
+
+            <button v-if="$mq === 'desktop'" class="modalButton"  @click="toggleModal">Contact us</button>
+
         </div>
 
 <!--        <h2>Loop 3</h2>
         <div v-for="(item, index) in filteringTry" :key="index+62">
             <p>{{ item.name }}</p>
         </div>-->
+        <Modal v-if="$mq === 'desktop'" v-model="modalToggled"></Modal>
     </div>
 </template>
 
 <script>
     import ContactForm from "@/components/ContactForm";
+    import Modal from "@/components/Modal";
     export default {
-        components: {ContactForm},
+        components: {ContactForm, Modal},
         name: "FinalScreen",
         data: function(){
             return {
                 variants: "",
                 filteredVariants: "",
                 sensors: [
+                    {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", thread: "Smooth", all:"DOL 26 SCR 16mm" },
+                    {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
+                    {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
+                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
                     {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
                     {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
                     {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
-                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" }
-                    ],
-                type: null,
-                diameter: null,
+                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
+                    {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
+                    {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
+                    {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
+                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
+                    {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
+                    {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
+                    {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
+                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
+                    {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
+                    {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
+                    {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
+                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
+                    {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
+                    {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
+                    {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
+                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
+                ],
                 tags: null,
                 contact: false,
-                loaded: false
+                loaded: false,
+                findSensor: null,
+                parameters: {
+                    type: '',
+                    diameter: '',
+                    thread: '',
+                    delay: '',
+                    tag:''
+                },
+                modalToggled: false
             }
 
         },
@@ -72,6 +108,11 @@
             onLoad: function() {
                 console.log("LOADING");
                 this.loaded = !this.loaded;
+            },
+
+            toggleModal: function () {
+                this.modalToggled = !this.modalToggled;
+                console.log("Huj w dupe policji")
             }
 
             //That might be the good I use currently!
@@ -97,13 +138,14 @@
 
         },
         computed: {
+            //OLD filtering function, based on separate vuex getters
             filteredParameters: function () {
                    return this.sensors.filter((sensor) => {
                         return sensor.type.toLowerCase().includes(this.filteredVariants) || sensor.diameter.includes(this.variants);
 
                     })
 
-         /*     let filtered = this.sensors;
+/*              let filtered = this.sensors;
                 if (this.filteredVariants){
                     filtered = this.sensors.filter(
                         m => m.type.toLowerCase().indexOf(this.filteredVariants) > -1
@@ -111,8 +153,17 @@
                 }
                 return filtered;*/
             },
+
+            // New filtering function. Based on tags taken from state
+                filterByTag() {
+                    return this.sensors.filter( sensor => {
+                        return !this.findSensor ||
+                            sensor.all.toLowerCase().indexOf(this.findSensor.toLowerCase()) > -1
+                    })
+                },
+
             filterByAll: function () {
-            return getBySearch(getByDiameter(getByType(this.sensors, this.type), this.diameter), this.tags)
+            return getBySearch(getByThread(getByDelay(getByDiameter(getByType(this.sensors, this.parameters.type), this.parameters.diameter), this.parameters.delay), this.parameters.thread), this.tags)
             },
 
             updateData: function () {
@@ -120,7 +171,20 @@
                 let type = localStorage.type;
                 return vm.type = type
 
-            }
+            },
+            updateType: function(){
+                return this.$store.getters.TYPE_GET;
+            },
+            updateDiameter: function () {
+                return this.$store.getters.DIAMETER_GET;
+            },
+            updateDelay: function () {
+                return this.$store.getters.DELAY_GET;
+            },
+            updateThread: function () {
+                return this.$store.getters.THREAD_GET;
+            },
+
 
 /*            FilteringTry: function () {
                return Array.prototype.forEach.call(this.variants, variants => {
@@ -128,6 +192,23 @@
                 })
 
             }*/
+
+
+        },
+        watch:{
+            updateDiameter(newValue){
+                console.log("Nowa " + newValue)
+                this.parameters.diameter = newValue;
+            },
+            updateType(newValue){
+                this.parameters.type = newValue;
+            },
+            updateDelay(newValue){
+                this.parameters.delay = newValue;
+            },
+            updateThread(newValue){
+                this.parameters.thread = newValue;
+            }
         },
         beforeMount(){
             this.get_data() //Fires the function on mount
@@ -136,16 +217,21 @@
         //Assign values from state to local Data() on Mount
         mounted(){
             var vm = this;
-
+            let getTag = this.$store.getters.TAG_GET;
+            this.findSensor = getTag
             //Loops through observer objects and tries to match them with filtered computed (Chosen filters)
             let store_type = vm.$store.getters.TYPE_GET;
             let store_diameter = vm.$store.getters.DIAMETER_GET;
             let store_tags = vm.$store.getters.TAG_GET;
-            vm.type = store_type;
-            vm.diameter = store_diameter;
+            let store_delay = vm.$store.getters.DELAY_GET;
+            let store_thread = vm.$store.getters.THREAD_GET;
+            vm.parameters.type = store_type;
+            vm.parameters.diameter = store_diameter;
+            vm.parameters.delay = store_delay;
+            vm.parameters.thread = store_thread;
             vm.tags = store_tags;
             console.log(vm.$store.getters.TYPE_GET);
-            console.log(vm.$store.getters.DIAMETER_GET);
+            console.log(vm.$store.getters.PARAMETERS_GET);
             console.log(store_tags);
 
             return
@@ -167,6 +253,15 @@
         if(!search) return list;
         return list.filter(item => item.all === search)
     }
+    function getByDelay (list, delay) {
+        if(!delay) return list;
+        return list.filter(item => item.delay === delay)
+    }
+    function getByThread (list, thread) {
+        if(!thread) return list;
+        return list.filter(item => item.thread === thread)
+    }
+
 
 /*    function getByName(list, name) {
         return 0
@@ -263,6 +358,77 @@ img {
     position: relative;
 
 }
+/*----------MOBILE SECTION-----------*/
+@media only screen and (max-width: 600px){
+
+}
+
+/*----------TABLET SECTION-----------*/
+@media only screen and (max-width: 768px){}
+
+/*----------DESKTOP SECTION-----------*/
+@media only screen and (min-width: 1000px){
+    .container {
+        padding-top: 0;
+    }
+    body, html {
+
+    }
+    main {
+        margin-top: 3%;
+    }
+    .card {
+        background-color: white;
+        border-radius: 15px;
+        width: 18%;
+        display: inline-block;
+        justify-content: space-between;
+        margin-bottom: 3%;
+        margin-right: 3%;
+        -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+        -moz-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+        box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+        padding-bottom: 1%;
+        padding-left: 1%;
+        animation: fade 0.2s;
+    }
+    .sub-list {
+        font-size: small;
+        text-align: left;
+        margin-left: 5%;
+        margin-top: 3%;
+        margin-bottom: 5%;
+    }
+    h2 {
+        font-weight: normal;
+    }
+    main {
+
+    }
+    .modalButton {
+        display: block;
+        position: fixed;
+        bottom: 30px;
+        right: 0;
+        width: 15%;
+        color: white;
+        background-color: rgba(0, 63, 117, 0.76);
+        border: 1px solid #004077;
+        margin-right: 4%;
+        border-radius: 20px;
+        padding: 0 15px 0;
+        cursor: pointer;
+
+    }
+    .modalButton:hover {
+        background-color: rgba(0, 63, 117, 1);
+    }
+    /*----------DESKTOP ANIMATION SECTION-----------*/
+
+}
+
+
+/*----------ANIMATION SECTION-----------*/
 .lds-ring {
     display: inline-block;
     position: relative;
@@ -282,6 +448,7 @@ img {
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     border-color: #004077 transparent transparent transparent;
 }
+
 .lds-ring div:nth-child(1) {
     animation-delay: -0.45s;
 }
@@ -299,5 +466,8 @@ img {
         transform: rotate(360deg);
     }
 }
+
+
+
 
 </style>

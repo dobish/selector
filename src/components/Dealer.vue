@@ -1,13 +1,13 @@
 <template>
     <div>
 
-        <div>
+        <div v-if="$mq === 'mobile'">
             <h2>Locate a dealer</h2>
             <div id="map"></div>
         </div>
         <l-map ref="myMap"></l-map>
 
-        <div style="height: 50vh; width: 100%">
+        <div class="dealerMap" >
             <l-map
                     v-if="location"
                     :zoom="zoom"
@@ -148,6 +148,11 @@
         font-size: medium;
         margin-top: 6%;
         text-transform: uppercase;
+    }
+    .dealerMap {
+        height: 50vh;
+        width: 100%;
+
     }
 
 </style>

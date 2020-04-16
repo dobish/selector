@@ -1,12 +1,13 @@
 <template>
     <section id="contact">
         <transition name="msgThanks" mode="out-in">
-            <p class="pre-text" v-if="!contactToggled">If you need guidance <button @click="showContact" class="button">CONTACT US</button></p>
+            <p class="pre-text" v-if="!contactToggled">If you need guidance <br><br> <button @click="showContact" class="button">CONTACT US</button></p>
         </transition>
 
         <transition name="msgThanks" mode="out-in">
     <div class="container" v-if="contactToggled">
-
+            <h2>Contact us</h2>
+        <p class="contactText">Do you have a question? Send us a message and we will respond as soon as possible.</p>
             <form @submit.prevent v-if="!messageSent">
                 <input type="email" placeholder="EMAIL" v-model="email" :class="{error: errorClass}">
                 <input type="name" placeholder="NAME" v-model="name" >
@@ -22,7 +23,7 @@
 
         <transition name="msgThanks">
         <div v-if="messageSent" class="thanks" style="transition-delay: .48s">
-            <h2>Thank you for your message {{ name }}, we will get to you as soon as possible!</h2>
+            <h2>Thank you for your message {{ name }}, we will get back to you as soon as possible!</h2>
         </div>
         </transition>
     </div>
@@ -39,7 +40,7 @@
         name: "ContactForm",
         data: function () {
             return {
-                textMessage: "Hi I am interested in dol 53",
+                textMessage: "Hello, I am interested in ",
                 errors: [],
                 name: null,
                 email: null,
@@ -49,7 +50,10 @@
                 errorClass: false,
                 messageSent: false,
                 stateParameters: [],
-                contactToggled: false
+                contactToggled: true,
+                props: {
+                    toggled: Boolean
+                }
 
             }
         },
@@ -111,14 +115,28 @@
             validEmail: function (email) {
                 var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return re.test(email);
+            },
+
+            stateCheck: function (data) {
+                for (let key in data) {
+                    if (data[key] === "") {
+                        //Nothing happens if someone didn't choose any single parameter. Default text is displayed
+                    } else {
+                        this.textMessage = "Hello, I am interested in sensors with " + data[key] + '-' + key ;
+                    }
+                }
             }
+        },
+        mounted(){
+            this.stateCheck(this.$store.getters.PARAMETERS_GET)
         }
-    }
+    };
+
 </script>
 
 <style scoped>
     .container {
-        margin-top: 10%;
+        margin-top: 2%;
         position: relative;
     }
 
@@ -235,5 +253,40 @@
         transition: border .2s ease-in-out;
         border: 2px solid #ff8080;
     }
+    .contactText {
+        margin-bottom: 10%;
+    }
+    /*----------MOBILE SECTION-----------*/
+    @media only screen and (max-width: 600px){
+
+    }
+
+    /*----------TABLET SECTION-----------*/
+    @media only screen and (max-width: 768px){}
+
+    /*----------DESKTOP SECTION-----------*/
+    @media only screen and (min-width: 1000px){
+        .submit {
+            border: 1px solid #004077;
+            border-radius: 50px;
+            display: inline-block;
+            color: white;
+            margin-bottom: 5%;
+            background-color: #004077;
+            margin-top: 3%;
+            width: 30%;
+            padding: 2%;
+            cursor: pointer;
+        }
+        .submit:hover {
+            background-color: white;
+            color: #004077;
+        }
+        #contact {
+            width: 50%;
+            margin-left: 25%;
+        }
+    }
+
 
 </style>

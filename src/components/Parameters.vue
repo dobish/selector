@@ -9,25 +9,33 @@
 
 
 
-
-        <div class="value-card" v-for="(sensor) in sensors" :key="sensor._id">
-            <Parameter  :sensor="sensor"></Parameter>
-        </div>
-        <router-link :to="{path: '/final'}">
+        <main>
+            <div class="values">
+                <div class="value-card" v-for="(sensor) in sensors" :key="sensor._id">
+                    <Parameter  :sensor="sensor"></Parameter>
+                </div>
+            </div>
+            <div class="final">
+                <finalscreen v-if="$mq === 'desktop'"></finalscreen>
+            </div>
+        </main>
+        <router-link :to="{path: '/final'}" v-if="$mq === 'mobile'">
             <button class="submit-button">SHOW SENSORS</button>
         </router-link>
     </div>
 </template>
 
 <script>
+    import finalscreen from "@/components/FinalScreen";
     const API_URL = "api/sensors";
     import Parameter from "@/components/Parameter";
+
     export default {
         props: {
             sensor: {type: Object}
         },
-        components: {Parameter},
-        name: "parametersTest",
+        components: {finalscreen, Parameter},
+        name: "Parameters",
         data: function(){
             return {
                 title: 'parameters',
@@ -55,41 +63,94 @@
 </script>
 
 <style scoped>
-    .parameter-values {
 
+
+    /*----------MOBILE SECTION-----------*/
+    @media only screen and (max-width: 600px){
+        .parameter-values {
+
+        }
+
+        img {
+            width: 100%;
+            position: relative;
+            margin-bottom: 8%;
+        }
+
+        .value-card {
+            background-color: white;
+            width: 90%;
+            margin-left: 5%;
+            margin-bottom: 2%;
+            border-radius: 10px;
+            -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+            -moz-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+            box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+        }
+
+        .image-card{
+            background-color: white;
+            width: 100%;
+            height: 200px;
+        }
+
+        .submit-button {
+            border: 1px solid #004077;
+            border-radius: 20px;
+            display: inline-block;
+            color: white;
+            margin-bottom: 5%;
+            background-color: #004077;
+            margin-top: 5%;
+            padding: 1% 4%;
+        }
     }
 
-    img {
-        width: 100%;
-        position: relative;
-        margin-bottom: 8%;
-    }
+    /*----------TABLET SECTION-----------*/
+    @media only screen and (max-width: 768px){}
 
-    .value-card {
-        background-color: white;
-        width: 90%;
-        margin-left: 5%;
-        margin-bottom: 2%;
-        border-radius: 10px;
-        -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
-        -moz-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
-        box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
-    }
+    /*----------DESKTOP SECTION-----------*/
+    @media only screen and (min-width: 1000px){
+        body, html{
+            overflow: hidden;
+        }
+        .value-card {
+            width: 90%;
+            margin-bottom: 30%;
+            margin-right: 0;
+            margin-left: 5%;
+            color: #004077;
+        }
+        .parameter-values {
+            background-color: rgba(0, 64, 119, 0.05);
+            align-items: flex-start;
+            border-radius: 0;
+            overflow: visible;
 
-    .image-card{
-        background-color: white;
-        width: 100%;
-        height: 200px;
-    }
-
-    .submit-button {
-        border: 1px solid #004077;
-        border-radius: 20px;
-        display: inline-block;
-        color: white;
-        margin-bottom: 5%;
-        background-color: #004077;
-        margin-top: 5%;
-        padding: 1% 4%;
+        }
+        .values {
+            float: left;
+            background-color: white;
+            width: 12%;
+            padding-left: 0;
+            padding-top: 3%;
+            position: fixed;
+            left: 0;
+            height: 100vh;
+            -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+            -moz-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+            box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+        }
+        .final {
+            width: 80%;
+            overscroll-behavior-y: contain;
+            margin-left: 15% ;
+        }
+        main {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            overflow: visible;
+        }
     }
 </style>

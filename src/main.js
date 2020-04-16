@@ -8,6 +8,7 @@ import L from 'leaflet';
 import axios from 'axios';
 import VueAxios from "vue-axios";
 import store from "./store"
+import VueMq from "vue-mq"
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -17,6 +18,15 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
 Vue.use(VueRouter, VueAxios, axios);
+
+Vue.use(VueMq, {
+  breakpoints: {
+      mobile: 450,
+      tablet: 900,
+      desktop: 1024,
+
+  }
+});
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);

@@ -10,7 +10,9 @@ export default new Vuex.Store({
         parameters: {
             type: '',
             diameter: '',
-            tag: ''
+            thread: '',
+            delay: '',
+            tag:''
         }
     },
     getters: {
@@ -20,7 +22,14 @@ export default new Vuex.Store({
         DIAMETER_GET(state){
             return state.parameters.diameter;
         },
+        DELAY_GET(state){
+            return state.parameters.delay;
+        },
+        THREAD_GET(state){
+            return state.parameters.thread;
+        },
         TAG_GET(state){
+            //return state.parameters.tag.join(' ');  //Filtering with an array
             return state.parameters.tag;
         },
        PARAMETERS_GET(state) {
@@ -48,7 +57,25 @@ export default new Vuex.Store({
                 state.parameters.diameter = payload;
             }
             },
+
+        SET_DELAY(state, payload) {
+            if (state.parameters.delay === payload) {
+                state.parameters.delay = ''
+            } else {
+                state.parameters.delay = payload;
+            }
+        },
+
+        SET_THREAD(state, payload) {
+            if (state.parameters.thread === payload) {
+                state.parameters.thread = ''
+            } else {
+                state.parameters.thread = payload;
+            }
+        },
+
         SET_TAG(state, payload) {
+            //state.parameters.tag.push(payload); //Search with an array
             state.parameters.tag = payload;
         }
 
