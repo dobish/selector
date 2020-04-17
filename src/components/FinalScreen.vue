@@ -112,7 +112,6 @@
 
             toggleModal: function () {
                 this.modalToggled = !this.modalToggled;
-                console.log("Huj w dupe policji")
             }
 
             //That might be the good I use currently!

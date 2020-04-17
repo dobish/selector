@@ -258,7 +258,9 @@
     }
     /*----------MOBILE SECTION-----------*/
     @media only screen and (max-width: 600px){
-
+        .contactText {
+            padding: 0 2% 0 0;
+        }
     }
 
     /*----------TABLET SECTION-----------*/

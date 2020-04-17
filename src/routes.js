@@ -14,6 +14,7 @@ import Parameter from "@/components/Parameter";
 import parametersTest from "@/components/parametersTest";
 import NavHeader from "@/components/NavHeader";
 import search from "@/components/search";
+import Guide from "@/components/Guide";
 
 
 
@@ -33,7 +34,8 @@ export default [
     { path: '/axio', component: testAxio},
     { path: '/loader', component: LoadingTest},
     { path: '/nav', component: NavHeader},
-    { path: '/search', component: search}
+    { path: '/search', component: search},
+    { path: '/guide', component: Guide}
 
 
 ]
