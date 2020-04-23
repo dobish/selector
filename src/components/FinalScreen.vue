@@ -13,11 +13,13 @@
             <li @click="toggleParameter(item)">
                 <div v-show="$mq === 'mobile'">{{ item.name }}</div>
                 <ul class="sub-list">
-                    <li v-show="$mq === 'desktop'"><img src="@/assets/DOL27.png" alt=""></li>
-                    <li v-show="$mq === 'desktop'"><h2>{{ item.name }}</h2></li>
+                    <li v-show="$mq === 'desktop' || $mq=== 'tablet'"><img src="@/assets/DOL27.png" alt=""></li>
+                    <li v-show="$mq === 'desktop' || $mq=== 'tablet'"><h2>{{ item.name }}</h2></li>
                     <li><span>Type: </span> {{ item.type }}</li>
                     <li><span>Diameter: </span>{{ item.diameter }}</li>
+                    <li><span>Thread: </span>{{ item.thread }}</li>
                     <li><span>Delay: </span>{{ item.delay }}</li>
+
                 </ul>
             </li>
             <hr v-show="$mq === 'mobile' ">
@@ -25,7 +27,7 @@
             </main>
             <ContactForm v-show="$mq === 'mobile'"></ContactForm>
 
-            <button v-if="$mq === 'desktop'" class="modalButton"  @click="toggleModal">Contact us</button>
+            <button v-if="$mq === 'desktop'|| $mq=== 'tablet'" class="modalButton"  @click="toggleModal">Contact us</button>
 
         </div>
 
@@ -40,6 +42,7 @@
 <script>
     import ContactForm from "@/components/ContactForm";
     import Modal from "@/components/Modal";
+    const API_URL = "api/sensors";
     export default {
         components: {ContactForm, Modal},
         name: "FinalScreen",
@@ -112,8 +115,16 @@
 
             toggleModal: function () {
                 this.modalToggled = !this.modalToggled;
-            }
-
+            },
+             loadSensors: function () {
+                 fetch(API_URL)
+                     .then(response => response.json())
+                     //.then(response => response.text())
+                     //.then(text => console.log(text))
+                     .then(result => {
+                         this.sensors = result;
+                     });
+             }
             //That might be the good I use currently!
 /*
             marek: function () {
@@ -232,7 +243,7 @@
             console.log(vm.$store.getters.TYPE_GET);
             console.log(vm.$store.getters.PARAMETERS_GET);
             console.log(store_tags);
-
+            this.loadSensors();
             return
         },
 
@@ -352,18 +363,74 @@ img {
     }
 
 
-img {
-    width: 100%;
-    position: relative;
 
-}
 /*----------MOBILE SECTION-----------*/
 @media only screen and (max-width: 600px){
+    img {
+        width: 100%;
+        position: relative;
 
+    }
 }
 
 /*----------TABLET SECTION-----------*/
-@media only screen and (max-width: 768px){}
+@media only screen and (min-width: 601px) and (max-width: 999px){
+    .container {
+        padding-top: 0;
+    }
+    body, html {
+
+    }
+    main {
+        margin-top: 3%;
+    }
+    .card {
+        background-color: white;
+        border-radius: 15px;
+        width: 18%;
+        display: inline-block;
+        justify-content: space-between;
+        margin-bottom: 3%;
+        margin-right: 3%;
+        -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+        -moz-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+        box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+        padding-bottom: 1%;
+        padding-left: 1%;
+        animation: fade 0.2s;
+    }
+    .sub-list {
+        font-size: small;
+        text-align: left;
+        margin-left: 5%;
+        margin-top: 3%;
+        margin-bottom: 5%;
+    }
+    h2 {
+        font-weight: normal;
+    }
+    main {
+
+    }
+    .modalButton {
+        display: block;
+        position: fixed;
+        bottom: 30px;
+        right: 0;
+        width: 15%;
+        color: white;
+        background-color: rgba(0, 63, 117, 0.76);
+        border: 1px solid #004077;
+        margin-right: 4%;
+        border-radius: 20px;
+        padding: 0 15px 0;
+        cursor: pointer;
+
+    }
+    .modalButton:hover {
+        background-color: rgba(0, 63, 117, 1);
+    }
+}
 
 /*----------DESKTOP SECTION-----------*/
 @media only screen and (min-width: 1000px){
@@ -421,6 +488,12 @@ img {
     }
     .modalButton:hover {
         background-color: rgba(0, 63, 117, 1);
+    }
+
+    img {
+        width: 100%;
+
+
     }
     /*----------DESKTOP ANIMATION SECTION-----------*/
 

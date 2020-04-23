@@ -10,7 +10,7 @@
                 @click="selectParameter(type, sensor.name)"
         >{{ type }}</button>
         </div>
-        <Guide :toggle="helpToggled"></Guide>
+        <Guide :toggle="helpToggled" :value="helpChosen" @closeModal="toggleHelp(sensor)"></Guide>
     </div>
 </template>
 
@@ -29,23 +29,27 @@ export default {
         toggled: false,
         selected: [],
             selection: {type: '', diameter: '', thread: '', delay: ''},
-            helpToggled: false
+            helpToggled: false,
+            helpChosen: null
         }
     },
     methods: {
         toggleParams: function (name) {
-            if (this.$mq === 'desktop'){
+            if (this.$mq === 'desktop' || this.$mq === 'tablet'){
                 this.toggled = true;
             } else {
                 this.toggled = !this.toggled;
             }
 
-            console.log("button " + name + " was clicked")
+            console.log("button " + name + " was clicked");
+            this.helpChosen = '';
+            this.helpChosen = name.toLowerCase();
         },
         selectParameter: function (type, name) {
-            let optionName = name.toLowerCase()
+            let optionName = name.toLowerCase();
 
-            console.log(type)
+
+            console.log(type);
             if(optionName === 'sensor types'){
                 //vm.selection.type === type ? vm.selection.type = null : vm.selection.type = null
                 this.selection.type = type
@@ -56,8 +60,6 @@ export default {
 
             else if(optionName === 'diameter') {
                 this.selection.diameter = type;
-                localStorage.setItem("diameter", type);
-
                 this.$store.commit('SET_DIAMETER', type);
                 //this.$store.commit('SET_TAG', type)
                 console.log(this.$store.getters.DIAMETER_GET)
@@ -83,8 +85,9 @@ export default {
 
 
             },
-    toggleHelp: function () {
+    toggleHelp: function (sensor) {
         this.helpToggled = !this.helpToggled;
+        console.log(sensor)
     }
         },
     mounted() {
@@ -180,6 +183,53 @@ export default {
     }
 
     /*----------TABLET SECTION-----------*/
+    @media only screen and (min-width: 601px) and (max-width: 999px){
+        .parameter-button {
+            border: 1px solid #004077;
+            margin-right: 4%;
+            border-radius: 20px;
+            padding: 0;
+            color: #004077;
+            margin-bottom: 10%;
+            background-color: white;
+            cursor: pointer;
+            display: block;
+            width: 50%;
+            margin-left: 25%;
+        }
+
+        .parameter-button:hover {
+            border: 1px solid white;
+            background-color: #004077;
+            color: white;
+
+        }
+        .button-wrapper {
+            justify-content: center;
+        }
+        .sensor-name {
+            margin-bottom: 10%;
+            display: flex;
+            justify-content: center;
+        }
+        .st0{fill:#004077;}
+        .st1{fill:#FFFFFF;}
+        .markIcon {
+            width: 100%;
+        }
+        .buttonIcon {
+            background: none;
+            color: inherit;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+            width: 13%;
+            margin-left: 5%;
+        }
+
+    }
     /*----------DESKTOP SECTION-----------*/
     @media only screen and (min-width: 1000px){
         .parameter-button {

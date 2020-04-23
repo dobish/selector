@@ -181,8 +181,8 @@ export default {
   }
 
   .logo-img {
-    height: 30%;
-    padding-top: 3%;
+    height: 20%;
+    padding-top: 6%;
     margin-left: 18%;
   }
 
@@ -255,7 +255,146 @@ export default {
 }
 
 /*----------TABLET SECTION-----------*/
-@media only screen and (max-width: 768px){}
+@media only screen and (min-width: 601px) and (max-width: 999px){body {
+
+}
+
+  h3 {
+
+  }
+
+  header {
+    height: 10%;
+  }
+
+  .search-container {
+    height: 85vh;
+    background-color: #fcfcfc;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    width: 100%;
+    overflow-y: auto;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    overscroll-behavior: contain;
+    position: absolute;
+    z-index: 111111;
+  }
+
+  .sensor-list {
+    overflow: auto;
+
+  }
+
+  .logo {
+    float:left;
+    display:inline;
+    width: 80%;
+    height: 100%;
+    transition: margin-left .25s;
+    background-color: #004077;
+  }
+
+  .search {
+    width: 100%;
+    background-color: #004077;
+    padding: 0 2% 0 2%;
+    position: absolute;
+    top: 0;
+    left: 80%;
+    z-index: 100;
+    transition: all .3s;
+    overflow: hidden;
+  }
+
+  .search-holder {
+    width: 50px;
+    float: left;
+    height: 50px;
+    background-color: white;
+    border-radius: 50%;
+    margin-top: 1%;
+    margin-left: 10%;
+    cursor: pointer;
+  }
+
+  .input-holder {
+    width: 80%;
+    float: left;
+  }
+
+  .logo-img {
+    height: 70%;
+    padding-top: 1%;
+    margin-left: 18%;
+  }
+
+  .search-img {
+    height: auto;
+    width: 46%;
+    margin-top: 23%;
+  }
+
+  .logoToggled {
+    margin-left: 0%;
+  }
+
+  .searchToggled {
+    left: 0 !important;
+  }
+
+  .search-field {
+    display: inline-block;
+    border-radius: 20px;
+    border: none;
+    width: 80%;
+    padding: 1% 2%;
+    margin-right: 3%;
+    margin-top: 1.5em;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+  a {
+    color: #42b983;
+  }
+  .mobile-header-nav {
+    background-color: #222;
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 100px;
+    width: 100%;
+  }
+
+  .mobile-nav-wrap{
+    height: 10vh;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    width: 100%;
+    max-width: 100%;
+
+  }
+
+
+
+  nav > div {
+    height: 100%;
+    overflow: auto;
+  }
+
+  header {
+
+  }}
 
 /*----------DESKTOP SECTION-----------*/
 @media only screen and (min-width: 1000px){

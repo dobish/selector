@@ -3,10 +3,10 @@
         <div class="modal-content" v-on-clickaway="closeModal">
             <button @click.prevent="closeModal()" ref="button" class="closeButton">X</button>
             <div class="image"><img src="@/assets/Card_test.jpg" alt=""></div>
-            <h2>Sensor Types</h2>
-            <p class="mainText">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+            <div v-for="(help, index) in filteredContent" :key="index + 123">
+                <h2> {{ help.title }}</h2>
+                    <p class="mainText">{{help.text}}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -17,22 +17,43 @@
 
     export default {
         mixins: [clickaway],
-        name: "Modal",
+        name: "Guide",
         props: {
             toggle: {
+                required: true
+            },
+            value: {
                 required: true
             }
         },
         data: function(){
             return {
                 title: 'modal-popup',
+                content:[
+                    {title: 'Sensor types', text: 'sensor types text', img: ''},
+                    {title: 'Diameter', text: 'diameter text', img: ''},
+                    {title: 'Thread', text: 'Thread text', img: ''},
+                    {title: 'Delay', text: 'Delay text', img: ''},
+                ]
             }
         },
         methods: {
             closeModal: function () {
-                this.$emit("input", !this.toggle);
+                this.$emit("closeModal", !this.toggle);
             }
-        }
+        },
+        computed: {
+          filteredContent: function () {
+                return this.content.filter((content) => {
+                    return content.title.toLowerCase().includes(this.value)
+                })
+          }
+        },
+        watch: {
+            toggle: function () {
+                console.log(this.toggle)
+            }
+        },
     }
 </script>
 
@@ -55,7 +76,7 @@
         background-color: #fefefe;
         margin: 8% auto; /* 15% from the top and centered */
         border: 1px solid #888;
-        width: 80%; /* Could be more or less, depending on screen size */
+        width: 60%; /* Could be more or less, depending on screen size */
         z-index: 11;
         border-radius: 10px;
         position: relative;
@@ -80,12 +101,15 @@
     }
     .image {
         width: 100%;
+        z-index: 11111;
 
     }
     img {
         width: 100%;
         border-top-right-radius: 10px;
         border-top-left-radius: 10px;
+        z-index: 11111;
+
     }
 
     .mainText {

@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const nodemailer = require('nodemailer');
 const path = require('path');
 const sensors = require('./db/sensors');
+const sens = require('./db/getSensors')
 
 //const Parameter = sensors.Parameter;
 
@@ -18,7 +19,7 @@ app.use(bodyParser.json());
 //Deployment section
 app.use(express.static(__dirname + '/../dist/'));
 
-app.get('/api/sensors', (req, res) => {
+app.get('/api/parameters', (req, res) => {
     // Parameter.getAll().then((sensors) => {
     //     res.json(sensors);
     //     console.log(sensors)
@@ -34,6 +35,22 @@ app.get('/api/sensors', (req, res) => {
             res.json(data)
             console.log(data)
         })*/
+    console.log('Dafuck ' + process.env.NODE_ENV)
+    console.log('Dafuck ' + process.env.VUE_APP_MONGO)
+});
+
+app.get('/api/sensors', (req, res) => {
+    sens.getAllSensors().then((sensors) => {
+        res.json(sensors);
+        console.log(sensors)
+        console.log(process.env.NODE_ENV)
+    });
+    //console.log(sensors.Parameter.find())
+    /*    Parameter.find({})
+            .then((data) => {
+                res.json(data)
+                console.log(data)
+            })*/
     console.log('Dafuck ' + process.env.NODE_ENV)
     console.log('Dafuck ' + process.env.VUE_APP_MONGO)
 });

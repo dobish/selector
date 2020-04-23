@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="final">
-                <finalscreen v-if="$mq === 'desktop'"></finalscreen>
+                <finalscreen v-if="$mq === 'desktop' || $mq=== 'tablet'"></finalscreen>
             </div>
         </main>
         <router-link :to="{path: '/final'}" v-if="$mq === 'mobile'">
@@ -27,7 +27,7 @@
 
 <script>
     import finalscreen from "@/components/FinalScreen";
-    const API_URL = "api/sensors";
+    const API_URL = "api/parameters";
     import Parameter from "@/components/Parameter";
 
     export default {
@@ -107,7 +107,49 @@
     }
 
     /*----------TABLET SECTION-----------*/
-    @media only screen and (max-width: 768px){}
+    @media only screen and (min-width: 601px) and (max-width: 999px){
+        body, html{
+            overflow: hidden;
+        }
+        .value-card {
+            width: 90%;
+            margin-bottom: 30%;
+            margin-right: 0;
+            margin-left: 5%;
+            color: #004077;
+        }
+        .parameter-values {
+            background-color: rgba(0, 64, 119, 0.05);
+            align-items: flex-start;
+            border-radius: 0;
+            overflow: visible;
+
+        }
+        .values {
+            float: left;
+            background-color: white;
+            width: 12%;
+            padding-left: 0;
+            padding-top: 3%;
+            position: fixed;
+            left: 0;
+            height: 100vh;
+            -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+            -moz-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+            box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.13);
+        }
+        .final {
+            width: 80%;
+            overscroll-behavior-y: contain;
+            margin-left: 15% ;
+        }
+        main {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            overflow: visible;
+        }
+    }
 
     /*----------DESKTOP SECTION-----------*/
     @media only screen and (min-width: 1000px){
