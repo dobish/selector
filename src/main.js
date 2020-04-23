@@ -22,8 +22,8 @@ Vue.use(VueRouter, VueAxios, axios);
 Vue.use(VueMq, {
   breakpoints: {
       mobile: 600,
-      tablet: 900,
-      desktop: 1024,
+      tablet: 999,
+      desktop: 1000,
 
   }
 });

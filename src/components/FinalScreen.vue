@@ -35,7 +35,7 @@
         <div v-for="(item, index) in filteringTry" :key="index+62">
             <p>{{ item.name }}</p>
         </div>-->
-        <Modal v-if="$mq === 'desktop'" v-model="modalToggled"></Modal>
+        <Modal v-if="$mq === 'desktop' || $mq=== 'tablet'" v-model="modalToggled"></Modal>
     </div>
 </template>
 
@@ -430,6 +430,10 @@ img {
     .modalButton:hover {
         background-color: rgba(0, 63, 117, 1);
     }
+
+    img {
+        width: 100%;
+    }
 }
 
 /*----------DESKTOP SECTION-----------*/
@@ -492,8 +496,6 @@ img {
 
     img {
         width: 100%;
-
-
     }
     /*----------DESKTOP ANIMATION SECTION-----------*/
 

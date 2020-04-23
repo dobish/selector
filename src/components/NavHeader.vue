@@ -467,9 +467,10 @@ export default {
   }
 
   .logo-img {
-    height: 70%;
-    padding-top: 1%;
-    margin-left: 18%;
+    height: 40%;
+    padding-top: 3%;
+    margin-left: 3%;
+    float: left;
   }
 
   .search-img {
