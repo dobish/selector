@@ -4,9 +4,18 @@
   <nav class="mobile-nav-wrap" role="navigation">
   <transition name="fade">
       <div class="logo" >
+        <div class="menu-wrapper" @click="openMenu">
+          <div class="hamburger-menu" :class="{'animate': navOpened}"></div>
+        </div>
         <router-link to="/index">
         <img class="logo-img" src="../assets/Dol-Sensors-long_white.png" alt="">
     </router-link>
+        <ul  class="desktopMenu" v-show="$mq === 'desktop'">
+          <li><router-link to="/index">home</router-link></li>
+          <li><router-link to="/">capacitive</router-link></li>
+          <li><router-link to="/">climate</router-link></li>
+          <li><router-link to="/contact">contact us</router-link></li>
+        </ul>
       </div>
   </transition>
     <transition name="searchfade">
@@ -22,6 +31,16 @@
     </transition>
   </nav>
   </header>
+    <transition name="menufade">
+    <div class="menuOverlay" v-if="navOpened">
+        <ul class="navList">
+          <router-link to="/index"><li @click="openMenu">Home</li></router-link>
+          <router-link to="/"><li @click="openMenu">Capacitive</li></router-link>
+          <router-link to="/"><li @click="openMenu">Climate</li></router-link>
+          <router-link to="/contact"><li @click="openMenu">Contact us</li></router-link>
+        </ul>
+    </div>
+    </transition>
     <transition name="slideUp">
       <div class="search-container" v-if="toggled">
         <div class="sensor-list">
@@ -77,13 +96,19 @@ export default {
         {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
         {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
       ],
-      findSensor: null
+      findSensor: null,
+      navOpened: false
     }
   },
   methods: {
     searchToggle: function(){
       this.toggled = !this.toggled;
       window.scrollTo(0,0)
+    },
+
+    openMenu: function(){
+      this.navOpened = !this.navOpened;
+      console.log('Ass')
     },
 
     sensorAssign: function (tag) {
@@ -252,6 +277,88 @@ export default {
   header {
 
   }
+  /*-----------MENU------------------*/
+  .menuOverlay {
+    height: 100%;
+    background-color: #fcfcfc;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    width: 100%;
+    overflow-y: auto;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    position: absolute;
+    z-index: 111111;
+  }
+
+  .navList li {
+    display: block;
+    margin-bottom: 10%;
+    text-decoration: none;
+  }
+
+  .navList a {
+    text-decoration: none;
+    font-size: large;
+    font-weight: initial;
+    color: #42b983;
+  }
+
+  .menu-wrapper {
+    cursor: pointer;
+    position: absolute;
+    top: 8%;
+    left: 5%;
+    width: 10%;
+    height: 30%;
+  }
+
+  .hamburger-menu,
+  .hamburger-menu:after,
+  .hamburger-menu:before {
+    width: 40px;
+    height: 3px;
+  }
+
+  .hamburger-menu {
+    position: relative;
+    transform: translateY(25px);
+    background: white;
+    transition: all 0ms 300ms;
+  }
+  .hamburger-menu.animate {
+    background: rgba(255, 255, 255, 0);
+  }
+
+  .hamburger-menu:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    background: white;
+    transition: bottom 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1), transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .hamburger-menu:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    background: white;
+    transition: top 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1), transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .hamburger-menu.animate:after {
+    top: 0;
+    transform: rotate(45deg);
+    transition: top 300ms cubic-bezier(0.23, 1, 0.32, 1), transform 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .hamburger-menu.animate:before {
+    bottom: 0;
+    transform: rotate(-45deg);
+    transition: bottom 300ms cubic-bezier(0.23, 1, 0.32, 1), transform 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
 }
 
 /*----------TABLET SECTION-----------*/
@@ -405,6 +512,21 @@ export default {
   h3 {
 
   }
+  /*----------MENU SECTION-----------*/
+  .desktopMenu {
+    color: white;
+    margin-top: 3%;
+  }
+
+  .desktopMenu a {
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: "Work Sans";
+
+  }
+
+  /*---------------------------------*/
 
   header {
     height: 10%;
@@ -423,6 +545,8 @@ export default {
     position: absolute;
     z-index: 111111;
   }
+
+  .
 
   .sensor-list {
     overflow: auto;
@@ -468,7 +592,7 @@ export default {
 
   .logo-img {
     height: 40%;
-    padding-top: 3%;
+    padding-top: 2%;
     margin-left: 3%;
     float: left;
   }
@@ -544,7 +668,7 @@ export default {
   /*-----------TRANSITIONS-----------*/
 .slideUp-enter, .slideUp-leave-to {
   opacity: 0;
-  transform: translateY(70%);
+  transform: translateY(10%);
 }
 
 .slideUp-enter-active, .slideUp-leave-active {
@@ -567,6 +691,15 @@ export default {
   opacity: 0;
 }
 
+
+.menufade-enter-active, .menufade-leave-active {
+  transition: all 0.3s;
+}
+
+.menufade-enter, .menufade-leave-to {
+  opacity: 0;
+  transform: translateX(-10%);
+}
 
 
 </style>

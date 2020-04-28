@@ -8,11 +8,14 @@
         </div>-->
 
 
-
+        <Name :toggled="toggleNames" @closeNameModal="nameModal"></Name>
         <main>
             <div class="values">
+                <div class="value-card">
+                    <button @click="nameModal">Sensor name</button>
+                </div>
                 <div class="value-card" v-for="(sensor) in sensors" :key="sensor._id">
-                    <Parameter  :sensor="sensor"></Parameter>
+                    <Parameter :sensor="sensor"></Parameter>
                 </div>
             </div>
             <div class="final">
@@ -29,24 +32,33 @@
     import finalscreen from "@/components/FinalScreen";
     const API_URL = "api/parameters";
     import Parameter from "@/components/Parameter";
+    import Name from "@/components/Name"
 
     export default {
         props: {
             sensor: {type: Object}
         },
-        components: {finalscreen, Parameter},
+        components: {finalscreen, Parameter, Name},
         name: "Parameters",
         data: function(){
             return {
                 title: 'parameters',
                 sensors: [],
                 selected: [],
-                images: ['DOL27_M30.jpg', '../assets/Sensors/DOL26.jpg', '../assets/Sensors/DOL26_18.jpg']
+                images: ['DOL27_M30.jpg', '../assets/Sensors/DOL26.jpg', '../assets/Sensors/DOL26_18.jpg'],
+                sensorNames: [
+                    {name: 'DOL 26', img: 'http://maciekwozniak.dk/dol-images/dol26.png'},
+                    {name: 'DOL 27', img: 'http://maciekwozniak.dk/dol-images/dol27.png'},
+                    {name: 'DOL 28', img: 'http://maciekwozniak.dk/dol-images/dol28.png'}
+                ],
+                toggleNames: false
 
             }
         },
         methods: {
-
+            nameModal: function () {
+                this.toggleNames = !this.toggleNames
+            }
         },
         mounted() {
             fetch(API_URL)
@@ -55,6 +67,7 @@
                 //.then(text => console.log(text))
                 .then(result => {
                     this.sensors = result;
+                    console.log(result)
                 });
 
             //this.sensor = this.sensors
@@ -63,7 +76,9 @@
 </script>
 
 <style scoped>
-
+.sensor-img {
+    width: 100%;
+}
 
     /*----------MOBILE SECTION-----------*/
     @media only screen and (max-width: 600px){

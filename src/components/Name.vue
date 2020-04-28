@@ -1,34 +1,38 @@
 <template>
-    <div class="modal" v-if="value" >
-        <div class="modal-content" v-on-clickaway="closeModal">
-            <button @click.prevent="closeModal()" ref="button" class="closeButton">X</button>
-            <ContactForm></ContactForm>
+    <div class="modal" v-if="toggled">
+        <div class="modal-content" v-on-clickaway="closeNameModal">
+            <button @click.prevent="closeNameModal()" ref="button" class="closeButton">X</button>
+            <div v-for="(sensor, index) in sensorNames" :key="index" class="sensor-name-list">
+                <img v-bind:src="sensor.img" alt="">
+                <div>{{sensor.name}}</div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-    import ContactForm from "@/components/ContactForm";
     import { mixin as clickaway } from 'vue-clickaway';
-
-
     export default {
-        components: {ContactForm},
+        name: "Name",
         mixins: [clickaway],
-        name: "Modal",
         props: {
-            value: {
+            toggled: {
                 required: true
             }
         },
-        data: function(){
+        data: function () {
             return {
-                title: 'modal-popup',
+                sensorNames: [
+                    {name: 'DOL 26', img: 'http://maciekwozniak.dk/dol-images/dol26.png'},
+                    {name: 'DOL 27', img: 'http://maciekwozniak.dk/dol-images/dol27.png'},
+                    {name: 'DOL 28', img: 'http://maciekwozniak.dk/dol-images/dol28.png'}
+                ],
+
             }
         },
         methods: {
-            closeModal: function () {
-                this.$emit("input", !this.value);
+            closeNameModal: function () {
+                this.$emit("closeNameModal", !this.toggled);
             }
         }
     }
@@ -36,6 +40,16 @@
 
 <style scoped>
 
+    .sensor-name-list {
+        display: inline-block;
+        border: 1px solid rgba(0,64,119,0.19);
+        border-radius: 20px;
+        margin-right: 1%;
+        margin-bottom: 1%;
+    }
+    .sensor-name-list:hover {
+        background-color: rgba(0,64,119,0.19);
+    }
     .modal {
         position: fixed;
         top: 0;
@@ -59,7 +73,7 @@
         border-radius: 10px;
     }
     .closeButton {
-       float: right;
+        float: right;
         font-size: large;
         border: 1px solid #004077;
         margin-right: 4%;

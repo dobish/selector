@@ -23,6 +23,7 @@
     "morgan": "^1.9.1",
     "node-sass": "^4.13.1",
     "nodemailer": "^6.4.3",
+    "v-scroll-lock": "^1.1.1",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
     "vue-clickaway": "^2.2.2",

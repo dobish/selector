@@ -36,11 +36,11 @@
                             'SCR sensors come as either Make, Break or programmable.</br>Make sensors activates the load when the sensor is detecting material, Break sensors activates the load when not detecting material, ' +
                             'Programmable sensors can be set either Make or Break by trimmer (DOL versions) or by the SmartAdjust app (iDOL versions)</br></br><b>Relay: </b> Relay sensors has an internal relay with COM, NO and NC electrically isolated from the sensor supply voltage. ' +
                             'Relay sensors can switch higher currents than PNP, NPN and SCR </br></br>' +
-                            'Check datasheet for voltage and current rating for the specific sensor.', img: 'http://maciekwozniak.dk/dol-images/Sensor_types.jpg'},
+                            'Check datasheet for voltage and current rating for the specific sensor.', img: 'http://maciekwozniak.dk/dol-images/sensor_types_guide-02.jpg'},
                     {title: 'Diameter', text: 'The capacitive sensors can be supplied in three different diameters, 18mm, 30mm and 33mm.\n' +
                             'The 33mm sensors are conical, with a diameter of 31mm at the sensing end and 33mm at the cable end.\n', img: ''},
                     {title: 'Thread', text: 'A smooth sensor is good for mounting in e.g. a PG cable gland.\n' +
-                            'A sensor with threads are easy to mount using nuts or in a threaded hole. The sensor is supplied with two plastic nuts.\n', img: ''},
+                            'A sensor with threads are easy to mount using nuts or in a threaded hole. The sensor is supplied with two plastic nuts.\n', img: 'http://maciekwozniak.dk/dol-images/Guide_Thread.jpg'},
                     {title: 'Delay', text: 'Delay text', img: 'http://maciekwozniak.dk/dol-images/Sensor_delay.jpg'},
                 ],
                 image: ''

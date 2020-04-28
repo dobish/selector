@@ -10,6 +10,8 @@ import VueAxios from "vue-axios";
 import store from "./store"
 import VueMq from "vue-mq"
 
+
+
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
