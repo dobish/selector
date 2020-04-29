@@ -81,6 +81,7 @@
                 loaded: false,
                 findSensor: null,
                 parameters: {
+                    name: '',
                     type: '',
                     diameter: '',
                     thread: '',
@@ -173,7 +174,7 @@
                 },
 
             filterByAll: function () {
-            return getBySearch(getByThread(getByDelay(getByDiameter(getByType(this.sensors, this.parameters.type), this.parameters.diameter), this.parameters.delay), this.parameters.thread), this.tags)
+            return getBySearch(getByName(getByThread(getByDelay(getByDiameter(getByType(this.sensors, this.parameters.type), this.parameters.diameter), this.parameters.delay), this.parameters.thread), this.parameters.name), this.tags)
             },
 
             updateData: function () {
@@ -194,6 +195,9 @@
             updateThread: function () {
                 return this.$store.getters.THREAD_GET;
             },
+            updateName: function () {
+                return this.$store.getters.NAME_GET;
+            }
 
 
 /*            FilteringTry: function () {
@@ -218,6 +222,9 @@
             },
             updateThread(newValue){
                 this.parameters.thread = newValue;
+            },
+            updateName(newValue){
+                this.parameters.name = newValue;
             }
         },
         beforeMount(){
@@ -235,6 +242,8 @@
             let store_tags = vm.$store.getters.TAG_GET;
             let store_delay = vm.$store.getters.DELAY_GET;
             let store_thread = vm.$store.getters.THREAD_GET;
+            let store_name = vm.$store.getters.NAME_GET;
+            vm.parameters.name = store_name;
             vm.parameters.type = store_type;
             vm.parameters.diameter = store_diameter;
             vm.parameters.delay = store_delay;
@@ -270,6 +279,10 @@
     function getByThread (list, thread) {
         if(!thread) return list;
         return list.filter(item => item.thread === thread)
+    }
+    function getByName(list, name) {
+        if(!name) return list;
+        return list.filter(item => item.name === name)
     }
 
 

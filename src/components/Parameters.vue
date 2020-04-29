@@ -12,7 +12,7 @@
         <main>
             <div class="values">
                 <div class="value-card">
-                    <button @click="nameModal">Sensor name</button>
+                    <button @click="nameModal" class="sensor-name-button">Sensor name</button>
                 </div>
                 <div class="value-card" v-for="(sensor) in sensors" :key="sensor._id">
                     <Parameter :sensor="sensor"></Parameter>
@@ -76,9 +76,24 @@
 </script>
 
 <style scoped>
-.sensor-img {
-    width: 100%;
+.sensor-name-button {
+    border: 1px solid #004077;
+    margin-right: 4%;
+    border-radius: 20px;
+    display: inline-block;
+    color: #004077;
+    padding: 0.5% 15px 0;
+    margin-bottom: 10%;
+    background-color: white;
+    margin-top: 5%;
+    cursor: pointer;
 }
+
+.sensor-name-button:hover {
+    color: white;
+    background-color: #004077;
+}
+
 
     /*----------MOBILE SECTION-----------*/
     @media only screen and (max-width: 600px){

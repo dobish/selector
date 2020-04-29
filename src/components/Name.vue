@@ -2,10 +2,11 @@
     <div class="modal" v-if="toggled">
         <div class="modal-content" v-on-clickaway="closeNameModal">
             <button @click.prevent="closeNameModal()" ref="button" class="closeButton">X</button>
-            <div v-for="(sensor, index) in sensorNames" :key="index" class="sensor-name-list">
+            <div v-for="(sensor, index) in sensorNames" :key="index" class="sensor-name-list" @click="setSensorName(sensor.name)">
                 <img v-bind:src="sensor.img" alt="">
                 <div>{{sensor.name}}</div>
             </div>
+
         </div>
     </div>
 </template>
@@ -33,6 +34,11 @@
         methods: {
             closeNameModal: function () {
                 this.$emit("closeNameModal", !this.toggled);
+            },
+            setSensorName: function (name) {
+                this.$store.commit('SET_NAME', name);
+                console.log(name);
+                this.closeNameModal();
             }
         }
     }
@@ -46,6 +52,11 @@
         border-radius: 20px;
         margin-right: 1%;
         margin-bottom: 1%;
+        width: 20%;
+        cursor: pointer;
+    }
+    img {
+        width: 100%;
     }
     .sensor-name-list:hover {
         background-color: rgba(0,64,119,0.19);
