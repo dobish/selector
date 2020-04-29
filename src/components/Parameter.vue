@@ -120,10 +120,9 @@ export default {
         border: 1px solid #004077;
         margin-right: 4%;
         border-radius: 20px;
-        padding: 0 15px 0;
         display: inline-block;
         color: #004077;
-        padding-top: 0.5%;
+        padding: 0.5% 20px 0;
         margin-bottom: 10%;
         background-color: white;
     }
@@ -243,8 +242,8 @@ export default {
             background-color: white;
             cursor: pointer;
             display: block;
-            width: 50%;
-            margin-left: 25%;
+            width: 60%;
+            margin-left: 15%;
         }
 
         .parameter-button:hover {

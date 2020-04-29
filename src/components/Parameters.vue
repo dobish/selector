@@ -12,7 +12,7 @@
         <main>
             <div class="values">
                 <div class="value-card">
-                    <button @click="nameModal" class="sensor-name-button">Sensor name</button>
+                    <button @click="nameModal" class="sensor-name-button" >Sensor name</button>
                 </div>
                 <div class="value-card" v-for="(sensor) in sensors" :key="sensor._id">
                     <Parameter :sensor="sensor"></Parameter>
@@ -76,18 +76,7 @@
 </script>
 
 <style scoped>
-.sensor-name-button {
-    border: 1px solid #004077;
-    margin-right: 4%;
-    border-radius: 20px;
-    display: inline-block;
-    color: #004077;
-    padding: 0.5% 15px 0;
-    margin-bottom: 10%;
-    background-color: white;
-    margin-top: 5%;
-    cursor: pointer;
-}
+
 
 .sensor-name-button:hover {
     color: white;
@@ -98,7 +87,9 @@
     /*----------MOBILE SECTION-----------*/
     @media only screen and (max-width: 600px){
         .parameter-values {
-
+            height: 100vh;
+            padding-bottom: 20%;
+            padding-top: 10%;
         }
 
         img {
@@ -133,6 +124,20 @@
             background-color: #004077;
             margin-top: 5%;
             padding: 1% 4%;
+        }
+        .values {}
+        .sensor-name-button {
+            border: 0px solid #004077;
+            margin-right: 4%;
+            border-radius: 20px;
+            display: inline-block;
+            color: #2c3e50;
+            padding: 0.5% 15px 0;
+            background-color: white;
+            margin-top: 5%;
+            margin-bottom: 5%;
+            cursor: pointer;
+            font-size: medium;
         }
     }
 
@@ -179,6 +184,17 @@
             justify-content: space-around;
             overflow: visible;
         }
+        .sensor-name-button {
+            border: 1px solid #004077;
+            margin-right: 4%;
+            border-radius: 20px;
+            display: inline-block;
+            color: #004077;
+            padding: 0.5% 15px 0;
+            background-color: white;
+            margin-top: 5%;
+            cursor: pointer;
+        }
     }
 
     /*----------DESKTOP SECTION-----------*/
@@ -203,7 +219,7 @@
         .values {
             float: left;
             background-color: white;
-            width: 12%;
+            width: 10%;
             padding-left: 0;
             padding-top: 3%;
             position: fixed;
@@ -223,6 +239,17 @@
             width: 100%;
             justify-content: space-around;
             overflow: visible;
+        }
+        .sensor-name-button {
+            border: 1px solid #004077;
+            margin-right: 4%;
+            border-radius: 20px;
+            display: inline-block;
+            color: #004077;
+            padding: 0.5% 15px 0;
+            background-color: white;
+            margin-top: 5%;
+            cursor: pointer;
         }
     }
 </style>
