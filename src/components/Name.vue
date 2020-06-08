@@ -99,4 +99,15 @@
         background-color: #004077;
         color: white;
     }
+    @media only screen and (max-width: 600px){
+        .sensor-name-list {
+            display: block;
+            border: 1px solid rgba(0,64,119,0.19);
+            border-radius: 20px;
+            margin-right: 1%;
+            margin-bottom: 1%;
+            width: 70%;
+            cursor: pointer;
+        }
+    }
 </style>
