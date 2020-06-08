@@ -2,7 +2,7 @@
     <div class="modal" v-if="toggled">
         <div class="modal-content" v-on-clickaway="closeNameModal">
             <button @click.prevent="closeNameModal()" ref="button" class="closeButton">X</button>
-            <div v-for="(sensor, index) in sensorNames" :key="index" class="sensor-name-list" @click="setSensorName(sensor.name)">
+            <div v-for="(sensor, index) in sensorNames" :key="index" class="sensor-name-list" :class="{active:chosenName.includes(sensor.name)}" @click="setSensorName(sensor.name)">
                 <img v-bind:src="sensor.img" alt="">
                 <div>{{sensor.name}}</div>
             </div>
@@ -28,7 +28,7 @@
                     {name: 'DOL 27', img: 'http://maciekwozniak.dk/dol-images/dol27.png'},
                     {name: 'DOL 28', img: 'http://maciekwozniak.dk/dol-images/dol28.png'}
                 ],
-
+                chosenName: []
             }
         },
         methods: {
@@ -37,8 +37,18 @@
             },
             setSensorName: function (name) {
                 this.$store.commit('SET_NAME', name);
-                console.log(name);
-                this.closeNameModal();
+                //this.closeNameModal();
+            }
+        },
+        computed: {
+            updateName: function () {
+                return this.$store.getters.NAME_GET;
+            }
+        },
+        watch: {
+            updateName(newValue){
+                this.chosenName = [];
+                this.chosenName.push(newValue);
             }
         }
     }
@@ -99,6 +109,9 @@
         background-color: #004077;
         color: white;
     }
+    .active {
+        background-color: rgba(0, 63, 119, 0.3);
+    }
     @media only screen and (max-width: 600px){
         .sensor-name-list {
             display: block;
@@ -108,6 +121,8 @@
             margin-bottom: 1%;
             width: 70%;
             cursor: pointer;
+
         }
+
     }
 </style>
