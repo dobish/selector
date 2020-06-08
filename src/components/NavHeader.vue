@@ -21,7 +21,7 @@
     <transition name="searchfade">
       <div class="search" :class="{ searchToggled : toggled }">
         <div class="search-holder">
-          <img v-if="!toggled" class="search-img"  @click="searchToggle()" src="../assets/search_icon_selector_blue.png" alt="">
+          <img v-if="!toggled" class="search-img"  @click="searchToggle(), loadSensors()" src="../assets/search_icon_selector_blue.png" alt="">
           <img v-else class="search-img"  @click="searchToggle()" src="../assets/X_icon_selector-02.png" alt="">
         </div>
         <div class="input-holder">
@@ -45,7 +45,7 @@
       <div class="search-container" v-if="toggled">
         <div class="sensor-list">
           <ul  style="margin: 0; ">
-            <li v-for="(sensor, index) in filterSearch" :key="index" style="margin: 20px; display: block" @click="sensorAssign(sensor.all)">
+            <li v-for="(sensor, index) in filterSearch" :key="index" style="margin: 20px; display: block" @click="sensorAssign(sensor.tags)">
              <router-link to="/final" >
               {{ sensor.name }}
              </router-link>
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+const API_URL = "api/sensors";
 
 export default {
   components: {},
@@ -70,32 +71,7 @@ export default {
     return {
       title: 'dol-sensors',
       toggled: false,
-      sensors: [
-        {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
-        {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
-        {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
-        {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
-        {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
-        {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
-        {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
-        {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
-        {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
-        {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
-        {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
-        {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
-        {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
-        {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
-        {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
-        {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
-        {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
-        {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
-        {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
-        {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
-        {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
-        {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
-        {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
-        {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
-      ],
+      sensors: [],
       findSensor: null,
       navOpened: false
     }
@@ -108,12 +84,18 @@ export default {
 
     openMenu: function(){
       this.navOpened = !this.navOpened;
-      console.log('Ass')
     },
 
     sensorAssign: function (tag) {
       this.$store.commit('SET_TAG', tag);
       this.toggled = !this.toggled;
+    },
+    loadSensors: function () {
+      fetch(API_URL)
+              .then(response => response.json())
+              .then(result => {
+                this.sensors = result;
+              });
     }
   },
 
@@ -121,10 +103,11 @@ export default {
     filterSearch() {
       return this.sensors.filter( sensor => {
         return !this.findSensor ||
-                sensor.all.toLowerCase().indexOf(this.findSensor.toLowerCase()) > -1
+                sensor.tags.toLowerCase().indexOf(this.findSensor.toLowerCase()) > -1
       })
     },
-  }
+  },
+
 }
 
 </script>

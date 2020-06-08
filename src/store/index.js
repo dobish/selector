@@ -30,7 +30,6 @@ export default new Vuex.Store({
             return state.parameters.thread;
         },
         TAG_GET(state){
-            //return state.parameters.tag.join(' ');  //Filtering with an array
             return state.parameters.tag;
         },
         NAME_GET(state){
@@ -39,9 +38,6 @@ export default new Vuex.Store({
        PARAMETERS_GET(state) {
             return state.parameters//let p = state.parameters;
 
-/*       for (let i in state.parameters) {
-                return i
-            }*/
         }
     },
     mutations: {

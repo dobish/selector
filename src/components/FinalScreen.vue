@@ -126,26 +126,8 @@
                          this.sensors = result;
                      });
              }
-            //That might be the good I use currently!
-/*
-            marek: function () {
-                console.log("Marek")
-                var vm = this;
-                console.log(vm.sensors)
-                let loc = JSON.parse(localStorage.getItem("Parameters"))
-                let filter = vm.sensors.includes("SCR")
-                console.log(loc)
-                //const arr = vm.sensors.filter(d => d.type === 'SCR')
-                //console.log(arr)
-                console.log(filter)
-                //Loops through observer objects and tries to match them with filtered computed (Chosen filters)
-                Array.prototype.forEach.call(this.sensors, types => {
-                    //console.log(types)
-                    console.log(types.diameter.toLowerCase().includes(this.filteredVariants) || types.type.toLowerCase().includes(this.filteredVariants))
-                })
-                return
-            }
-*/
+
+
 
         },
         computed: {
@@ -174,7 +156,7 @@
                 },
 
             filterByAll: function () {
-            return getBySearch(getByName(getByThread(getByDelay(getByDiameter(getByType(this.sensors, this.parameters.type), this.parameters.diameter), this.parameters.delay), this.parameters.thread), this.parameters.name), this.tags)
+            return getBySearch(getByName(getByThread(getByDelay(getByDiameter(getByType(this.sensors, this.parameters.type), this.parameters.diameter), this.parameters.delay), this.parameters.thread), this.parameters.name), this.parameters.tag)
             },
 
             updateData: function () {
@@ -197,17 +179,10 @@
             },
             updateName: function () {
                 return this.$store.getters.NAME_GET;
+            },
+            updateTags: function () {
+                return this.$store.getters.TAG_GET;
             }
-
-
-/*            FilteringTry: function () {
-               return Array.prototype.forEach.call(this.variants, variants => {
-                    return filterSensors(this.sensors, variants)
-                })
-
-            }*/
-
-
         },
         watch:{
             updateDiameter(newValue){
@@ -226,6 +201,9 @@
             updateName(newValue){
                 this.parameters.name = newValue;
             },
+            updateTags(newValue){
+                this.parameters.tag = newValue;
+            },
             filterByAll(){
                 console.log(this.filterByAll.length)
             }
@@ -237,8 +215,6 @@
         //Assign values from state to local Data() on Mount
         mounted(){
             var vm = this;
-            let getTag = this.$store.getters.TAG_GET;
-            this.findSensor = getTag
             //Loops through observer objects and tries to match them with filtered computed (Chosen filters)
             let store_type = vm.$store.getters.TYPE_GET;
             let store_diameter = vm.$store.getters.DIAMETER_GET;
@@ -251,7 +227,7 @@
             vm.parameters.diameter = store_diameter;
             vm.parameters.delay = store_delay;
             vm.parameters.thread = store_thread;
-            vm.tags = store_tags;
+            vm.parameters.tag = store_tags;
             console.log(vm.$store.getters.TYPE_GET);
             console.log(vm.$store.getters.PARAMETERS_GET);
             console.log(store_tags);
@@ -273,7 +249,7 @@
 
     function getBySearch(list, search) {
         if(!search) return list;
-        return list.filter(item => item.all === search)
+        return list.filter(item => item.tags === search)
     }
     function getByDelay (list, delay) {
         if(!delay) return list;
@@ -289,16 +265,7 @@
     }
 
 
-/*    function getByName(list, name) {
-        return 0
-    }*/
 
-/*    function filterSensors(list, filters) {
-        if(!filters) return list
-        console.log(filters)
-        console.log(list.filter(item => (item.diameter) && (item.type) === filters))
-        return list.filter(item => item.type === filters)
-    }*/
 
 </script>
 
