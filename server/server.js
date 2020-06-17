@@ -35,8 +35,6 @@ app.get('/api/parameters', (req, res) => {
             res.json(data)
             console.log(data)
         })*/
-    console.log('Dafuck ' + process.env.NODE_ENV)
-    console.log('Dafuck ' + process.env.VUE_APP_MONGO)
 });
 
 app.get('/api/sensors', (req, res) => {
