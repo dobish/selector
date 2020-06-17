@@ -22,11 +22,7 @@ L.Icon.Default.mergeOptions({
 });
 Vue.use(VueRouter, VueAxios, axios);
 
-// Configuration VueAnalytics
-Vue.use(VueAnalytics, {
-    id: 'UA-134196923-3',
-    VueRouter
-});
+
 
 Vue.use(VueMq, {
   breakpoints: {
@@ -46,6 +42,12 @@ Vue.config.productionTip = false
 const router = new VueRouter({
   routes: Routes,
   mode: 'history'
+});
+
+// Configuration VueAnalytics
+Vue.use(VueAnalytics, {
+    id: 'UA-134196923-3',
+    router
 });
 
 new Vue({
