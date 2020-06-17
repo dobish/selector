@@ -7,9 +7,8 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import axios from 'axios';
 import VueAxios from "vue-axios";
-import store from "./store";
-import VueMq from "vue-mq";
-import VueAnalytics from "vue-analytics";
+import store from "./store"
+import VueMq from "vue-mq"
 
 
 
@@ -31,7 +30,6 @@ Vue.use(VueMq, {
   }
 });
 
-
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
 Vue.component('l-marker', LMarker);
@@ -42,11 +40,6 @@ const router = new VueRouter({
   routes: Routes,
   mode: 'history'
 });
-
-Vue.use(VueAnalytics, {
-    id: 'UA-134196923-3',
-    router
-})
 
 new Vue({
 
