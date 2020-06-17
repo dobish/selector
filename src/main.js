@@ -7,8 +7,9 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import axios from 'axios';
 import VueAxios from "vue-axios";
-import store from "./store"
-import VueMq from "vue-mq"
+import store from "./store";
+import VueMq from "vue-mq";
+import VueAnalytics from 'vue-analytics';
 
 
 
@@ -20,6 +21,12 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
 Vue.use(VueRouter, VueAxios, axios);
+
+// Configuration VueAnalytics
+Vue.use(VueAnalytics, {
+    id: 'UA-134196923-3',
+    VueRouter
+});
 
 Vue.use(VueMq, {
   breakpoints: {
