@@ -7,8 +7,9 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import axios from 'axios';
 import VueAxios from "vue-axios";
-import store from "./store"
-import VueMq from "vue-mq"
+import store from "./store";
+import VueMq from "vue-mq";
+import VueGtag from "vue-gtag";
 
 
 
@@ -40,6 +41,10 @@ const router = new VueRouter({
   routes: Routes,
   mode: 'history'
 });
+
+Vue.use(VueGtag, {
+    config: { id: "UA-134196923-3" }
+}, router);
 
 new Vue({
 
