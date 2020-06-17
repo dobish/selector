@@ -1,18 +1,17 @@
-<template>
-    <div class="container" >
-        <div class="sensor-name" @click="toggleParams(sensor.name)">{{ sensor.name }} <button value=""  class="buttonIcon" @click="toggleHelp"><svg class="markIcon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+
+<div class="container" >
+    <div class="sensor-name" @click="toggleParams(sensor.name)">{{ sensor.name }} <button value=""  class="buttonIcon" @click="toggleHelp"><svg class="markIcon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                                            viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve"><circle class="st0" cx="100" cy="99.74" r="94.74"/> <path class="st1" d="M144.05,69.43c0,22.45-16.12,33.38-36.07,35.49v20.53H92.06V96.67c25.52-3.84,35.88-10.74,35.88-25.32
 		c0-12.09-8.82-20.14-27.05-20.14c-16.88,0-28.2,9.98-30.12,26.09l-13.62-7.87c4.22-19.57,20.72-32.61,44.89-32.61
 		C126.59,36.81,144.05,49.28,144.05,69.43z M112.2,154.8c0,7.48-4.99,12.47-12.47,12.47c-7.48,0-12.47-4.99-12.47-12.47
 		s4.99-12.47,12.47-12.47C107.22,142.33,112.2,147.32,112.2,154.8z"/></svg></button></div>
-        <div v-if="toggled" class="button-wrapper">
+    <div v-if="toggled" class="button-wrapper">
         <button v-for="(type, index) in sensor.types" :key="index+42" class="parameter-button" :class="{highlight:selected.includes(type)}"
                 @click="selectParameter(type, sensor.name)"
         >{{ type }}</button>
-        </div>
-        <Guide :toggle="helpToggled" :value="helpChosen" @closeModal="toggleHelp(sensor)"></Guide>
     </div>
-</template>
+    <Guide :toggle="helpToggled" :value="helpChosen" @closeModal="toggleHelp(sensor)"></Guide>
+</div>
 
 <script>
     import Guide from "@/components/Guide"
