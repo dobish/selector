@@ -14,7 +14,7 @@
                 <div v-show="$mq === 'mobile'">{{ item.name }}</div>
                 <ul class="sub-list">
                     <li v-show="$mq === 'desktop' || $mq=== 'tablet'"><img src="@/assets/DOL27.png" alt=""></li>
-                    <li v-show="$mq === 'desktop' || $mq=== 'tablet'"><h2>{{ item.display_name }}</h2></li>
+                    <li v-show="$mq === 'desktop' || $mq=== 'tablet'"><h2>{{ item.name }}</h2></li>
                     <li><span>Type: </span> {{ item.type }}</li>
                     <li><span>Diameter: </span>{{ item.diameter }}</li>
                     <li><span>Thread: </span>{{ item.thread }}</li>
