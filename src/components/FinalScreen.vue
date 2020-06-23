@@ -18,8 +18,8 @@
                     <li><span>Type: </span> {{ item.type }}</li>
                     <li><span>Diameter: </span>{{ item.diameter }}</li>
                     <li><span>Thread: </span>{{ item.thread }}</li>
-                    <li><span>Delay: </span>{{ item.delay }}</li>
-
+                    <li><span>On delay: </span>{{ item.on_delay }}</li>
+                    <li><span>Of delay: </span>{{ item.off_delay }}</li>
                 </ul>
             </li>
             <hr v-show="$mq === 'mobile' ">
