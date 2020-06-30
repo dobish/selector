@@ -19,7 +19,7 @@
                     <li><span>Diameter: </span>{{ item.diameter }}</li>
                     <li><span>Thread: </span>{{ item.thread }}</li>
                     <li><span>On delay: </span>{{ item.on_delay }}</li>
-                    <li><span>Of delay: </span>{{ item.off_delay }}</li>
+                    <li><span>Off delay: </span>{{ item.off_delay }}</li>
                 </ul>
             </li>
             <hr v-show="$mq === 'mobile' ">
@@ -42,7 +42,9 @@
 <script>
     import ContactForm from "@/components/ContactForm";
     import Modal from "@/components/Modal";
+    import local_sensors from '../data/local_db.json'
     const API_URL = "api/sensors";
+
     export default {
         components: {ContactForm, Modal},
         name: "FinalScreen",
@@ -50,32 +52,7 @@
             return {
                 variants: "",
                 filteredVariants: "",
-                sensors: [
-                    {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", thread: "Smooth", all:"DOL 26 SCR 16mm" },
-                    {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
-                    {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
-                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
-                    {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
-                    {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
-                    {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
-                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
-                    {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
-                    {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
-                    {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
-                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
-                    {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
-                    {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
-                    {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
-                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
-                    {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
-                    {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
-                    {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
-                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
-                    {name: "DOL 26 with SCR 16", type: "SCR", diameter:"16mm", all:"DOL 26 SCR 16mm" },
-                    {name: "DOL 26 with NPN 16", type: "NPN", diameter:"16mm", all:"DOL 26 NPN 16mm" },
-                    {name: "DOL 26 with PNP 23", type: "PNP", diameter:"23mm", all:"DOL 26 PNP 23mm" },
-                    {name: "DOL 27 with PNP 18", type: "PNP", diameter:"18mm", all:"DOL 27 PNP 18mm" },
-                ],
+                sensors: local_sensors,
                 tags: null,
                 contact: false,
                 loaded: false,
@@ -253,7 +230,7 @@
     }
     function getByDelay (list, delay) {
         if(!delay) return list;
-        return list.filter(item => item.delay === delay)
+        return list.filter(item => item.off_delay === delay) || (item => item.on_delay === delay);
     }
     function getByThread (list, thread) {
         if(!thread) return list;

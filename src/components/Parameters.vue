@@ -221,7 +221,7 @@
             background-color: white;
             width: 10%;
             padding-left: 0;
-            padding-top: 3%;
+            padding-top: 1%;
             position: fixed;
             left: 0;
             height: 100vh;
